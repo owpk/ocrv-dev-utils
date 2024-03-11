@@ -1,0 +1,63 @@
+version: '3.4'
+
+services:
+  auth:
+    image: deadjack/czt-auth:latest
+#    image: nexus.ocrv.com.rzd/czt-portal/auth:ocrv
+    ports:
+      - "9000:9000"
+    depends_on:
+      - auth-db
+    environment:
+      - JAVA_ARGS=
+        --spring.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.datasource.username=auth
+        --spring.datasource.password=auth-secret
+        --client.pkce=false
+        --token.duration.access=3
+        --token.duration.refresh=30
+        --token.duration.code=10
+    restart: always
+    networks:
+      - czt-network    
+  auth-db:
+    image: postgres:14
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=authdb
+      - POSTGRES_USER=auth
+      - POSTGRES_PASSWORD=auth-secret
+    restart: always
+    networks:
+      - czt-network
+
+  bff:
+    depends_on:
+      - auth
+    image: deadjack/czt-bff:latest
+    ports:
+      - "9002:9002"
+    environment:
+      - JAVA_ARGS=
+        --bff.serviceDefinitions.oauth2.domain=auth
+        --bff.serviceDefinitions.oauth2.port=9000
+        --bff.serviceDefinitions.oauth2.prefix=/oauth2
+        --bff.serviceDefinitions.fs.domain=172.17.0.1
+        --bff.serviceDefinitions.fs.port=8080
+        --bff.serviceDefinitions.fs.prefix=/fs
+        --bff.serviceDefinitions.pn.domain=172.17.0.1
+        --bff.serviceDefinitions.pn.port=8081
+        --bff.serviceDefinitions.pn.prefix=/pn
+        --bff.serviceDefinitions.portal.domain=auth
+        --bff.serviceDefinitions.portal.port=9000
+        --bff.serviceDefinitions.portal.prefix=/portal
+        --spring.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.datasource.username=auth
+        --spring.datasource.password=auth-secret
+    restart: always
+    networks:
+      - czt-network       
+networks:
+  czt-network:
+    driver: bridge        

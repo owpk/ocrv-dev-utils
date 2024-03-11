@@ -1,0 +1,134 @@
+version: '3.4'
+
+services:
+  auth:
+    image: deadjack/czt-auth:latest
+#    image: nexus.ocrv.com.rzd/czt-portal/auth:ocrv
+    ports:
+      - "9000:9000"
+    depends_on:
+      - auth-db
+    environment:
+      - JAVA_ARGS=
+        --spring.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.datasource.username=auth
+        --spring.datasource.password=auth-secret
+        --client.pkce=false
+        --token.duration.access=3
+        --token.duration.refresh=30
+        --token.duration.code=10
+    networks:
+      - czt-network    
+  auth-db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=authdb
+      - POSTGRES_USER=auth
+      - POSTGRES_PASSWORD=auth-secret
+    restart: on-failure
+    networks:
+      - czt-network
+  fs-db:
+    image: postgres:14
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=fsdb
+      - POSTGRES_USER=fs_service
+      - POSTGRES_PASSWORD=fs-secret
+    restart: on-failure
+    volumes:
+      - "./volumes/fs-db/pgdata/data:/var/lib/postgresql/data"    
+    networks:
+      - czt-network    
+  pn-db:
+    image: postgres:14
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_DB=pndb
+      - POSTGRES_USER=pn_service
+      - POSTGRES_PASSWORD=pn-secret
+    restart: on-failure
+    volumes:
+      - "./volumes/pn-db/pgdata/data:/var/lib/postgresql/data"
+    networks:
+      - czt-network    
+  bff:
+    depends_on:
+      - auth
+    image: deadjack/czt-bff:latest
+    ports:
+      - "9002:9002"
+    environment:
+      - JAVA_ARGS=
+        --bff.serviceDefinitions.oauth2.domain=auth
+        --bff.serviceDefinitions.oauth2.port=9000
+        --bff.serviceDefinitions.oauth2.prefix=/oauth2
+        --bff.serviceDefinitions.fs.domain=fs
+        --bff.serviceDefinitions.fs.port=8080
+        --bff.serviceDefinitions.fs.prefix=/fs
+        --bff.serviceDefinitions.pn.domain=pn
+        --bff.serviceDefinitions.pn.port=8081
+        --bff.serviceDefinitions.pn.prefix=/pn
+        --bff.serviceDefinitions.portal.domain=auth
+        --bff.serviceDefinitions.portal.port=9000
+        --bff.serviceDefinitions.portal.prefix=/portal
+        --spring.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.datasource.username=auth
+        --spring.datasource.password=auth-secret
+    networks:
+      - czt-network    
+  fs:
+    depends_on:
+      - fs-db
+      - auth-db
+      - bff
+    image: deadjack/czt-fs-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_ARGS=
+        --com.ocrv.auth.issuerUri=http://auth:9000
+        --com.ocrv.fs.rover.datasources.fs.url=jdbc:postgresql://fs-db:5432/fsdb?rewriteBatchedStatements=true
+        --com.ocrv.fs.rover.datasources.fs.username=fs_service
+        --com.ocrv.fs.rover.datasources.fs.password=fs-secret
+        --com.ocrv.fs.rover.datasources.pn.url=jdbc:postgresql://pn-db:5432/pndb?rewriteBatchedStatements=true
+        --com.ocrv.fs.rover.datasources.pn.username=pn_service
+        --com.ocrv.fs.rover.datasources.pn.password=pn-secret
+        --com.ocrv.fs.rover.datasources.auth.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --com.ocrv.fs.rover.datasources.auth.username=auth
+        --com.ocrv.fs.rover.datasources.auth.password=auth-secret
+        --spring.datasource.jdbc-url=jdbc:postgresql://fs-db:5432/fsdb?rewriteBatchedStatements=true
+        --spring.datasource.url=jdbc:postgresql://fs-db:5432/fsdb?rewriteBatchedStatements=true
+        --spring.datasource.username=fs_service
+        --spring.datasource.password=fs-secret
+        --spring.auth.datasource.jdbc-url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.auth.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.auth.datasource.username=auth
+        --spring.auth.datasource.password=auth-secret
+        --springdoc.api-docs.enabled=true
+    networks:
+      - czt-network  
+  pn:
+    depends_on:
+      - pn-db
+      - bff
+    #image: deadjack/czt-pn-backend:latest
+    image: pn-back:test
+    ports:
+      - "8081:8081"
+    environment:
+      - JAVA_ARGS=
+        --com.ocrv.auth.issuerUri=http://auth:9000
+        --spring.datasource.url=jdbc:postgresql://pn-db:5432/pndb?rewriteBatchedStatements=true
+        --spring.datasource.username=pn_service
+        --spring.datasource.password=pn-secret
+        --springdoc.api-docs.enabled=true
+    networks:
+      - czt-network      
+networks:
+  czt-network:
+    driver: bridge        
