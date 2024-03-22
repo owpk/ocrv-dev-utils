@@ -20,18 +20,18 @@ BEGIN
       add_info,
       is_error,
       nvplan,
-      nvfakt,
+      nvfact,
       nvbase,
       tplan,
-      tfakt,
+      tfact,
       nvplan_rank,
-      nvfakt_rank,
+      nvfact_rank,
       nvplan_rank_tkf,
-      nvfakt_rank_tkf,
+      nvfact_rank_tkf,
       tplan_rank,
-      tfakt_rank,
+      tfact_rank,
       tplan_rank_tkf,
-      tfakt_rank_tkf,
+      tfact_rank_tkf,
       issued_by,
       last_modified,
       last_modified_by
@@ -72,5 +72,4 @@ BEGIN
     END LOOP;
 END
 $do$;
-
 
