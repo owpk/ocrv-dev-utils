@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DB_NAME=pndb
-DB_PASS="pn-secret"
-DB_USER="pn_service"
+DB_NAME=test_db
+DB_PASS=postgres
+DB_USER=postgres
 
 DUMP="$1"
 echo "Dump file: $DUMP"
