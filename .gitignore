@@ -1,4 +1,4 @@
 volumes/
 *.log
 dump*
-*.sql
+dump/
