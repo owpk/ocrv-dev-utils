@@ -1,3 +1,5 @@
 volumes/
 *.log
 dump*
+dump/
+.DS_Store
