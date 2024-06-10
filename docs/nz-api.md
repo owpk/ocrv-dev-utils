@@ -45,10 +45,17 @@
 ```json
 {
     "isValid": false,
-    "validationErrorEntries": [{   
+    "fieldErrors" : [{
+        "field_name" : "name",
+        "violation" : "msg"
+    }],
+    "globalErrors": [{   
         "category" : "example", 
         "errors": [{
-            "fieldName": "name",
+            "fieldErrors" : [{ // <-- nullable
+                "field_name" : "name",
+                "violation" : "msg"
+            }],
             "msg" : "errorMessage"
         }]
     }]
