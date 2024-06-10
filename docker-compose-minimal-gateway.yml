@@ -1,0 +1,91 @@
+version: '3.4'
+
+services:
+  auth:
+    image: deadjack/czt-auth:latest
+    ports:
+      - "9000:9000"
+    depends_on:
+      - auth-db
+    environment:
+      - JAVA_ARGS=
+        --spring.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.datasource.username=auth
+        --spring.datasource.password=auth-secret
+        --client.pkce=false
+        --token.duration.access=3
+        --token.duration.refresh=30
+        --token.duration.code=10
+        --bff.service.gateway.domain=gateway
+        --bff.service.gateway.port=8082
+        --bff.service.gateway.prefix=/gateway
+        --spring.profiles.active=local        
+    networks:
+      - czt-network    
+  auth-db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=authdb
+      - POSTGRES_USER=auth
+      - POSTGRES_PASSWORD=auth-secret
+    restart: on-failure
+    networks:
+      - czt-network
+  gateway-db:
+    image: postgres:14
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_DB=gatewaydb
+      - POSTGRES_USER=gateway_service
+      - POSTGRES_PASSWORD=gateway-secret
+    restart: on-failure
+    networks:
+      - czt-network      
+  bff:
+    depends_on:
+      - auth
+    image: deadjack/czt-bff:latest
+    ports:
+      - "9002:9002"
+    environment:
+      - JAVA_ARGS=
+        --bff.service.oauth2.domain=auth
+        --bff.service.oauth2.port=9000
+        --bff.service.oauth2.prefix=/oauth2
+        --bff.service.fs.domain=fs
+        --bff.service.fs.port=8080
+        --bff.service.fs.prefix=/fs
+        --bff.service.pn.domain=pn
+        --bff.service.pn.port=8081
+        --bff.service.pn.prefix=/pn
+        --bff.service.portal.domain=auth
+        --bff.service.portal.port=9000
+        --bff.service.portal.prefix=/portal
+        --spring.datasource.url=jdbc:postgresql://auth-db:5432/authdb?rewriteBatchedStatements=true
+        --spring.datasource.username=auth
+        --spring.datasource.password=auth-secret
+    networks:
+      - czt-network    
+  gateway:
+    depends_on:
+      - gateway-db
+      - bff
+    image: deadjack/czt-gateway:latest
+    ports:
+      - "8082:8082"
+    environment:
+      - JAVA_ARGS=
+        --com.ocrv.auth.issuerUri=http://auth:9000
+        --spring.datasource.url=jdbc:postgresql://gateway-db:5432/gatewaydb?rewriteBatchedStatements=true
+        --spring.datasource.username=gateway_service
+        --spring.datasource.password=gateway-secret
+        --springdoc.api-docs.enabled=true
+        --spring.profiles.active=local
+    networks:
+      - czt-network         
+networks:
+  czt-network:
+    driver: bridge        
