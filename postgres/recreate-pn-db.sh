@@ -4,7 +4,6 @@ DB_NAME=$1
 DB_PASS=$2
 DB_USER=$3
 DB_PORT=$4
-
 DUMP="$5"
 
 echo "connection info:"
@@ -19,7 +18,7 @@ IMAGE=postgres:14
 
 docker container rm -f $CONTAINER_NAME
 
-docker run --name $CONTAINER_NAME -p 5450:5432 -d \
+docker run --name $CONTAINER_NAME -p $DB_PORT:5432 -d \
     -e POSTGRES_PASSWORD=$DB_PASS \
     -e POSTGRES_USER=$DB_USER \
     -e POSTGRES_DB=$DB_NAME \
