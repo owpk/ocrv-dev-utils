@@ -9,4 +9,5 @@ git checkout master
 git pull
 git branch --track $HOME_BRANCH $REMOTE_HOME/$HOME_BRANCH
 git checkout $HOME_BRANCH
+git pull $REMOTE_HOME $HOME_BRANCH:$HOME_BRANCH
 git push -u $REMOTE_WORK $HOME_BRANCH
