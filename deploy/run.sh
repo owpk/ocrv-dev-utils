@@ -1,13 +1,19 @@
 #!/bin/sh
 
-if ! command -v rails > /dev/null
-then
-    echo "'rails' could not be found"
-    echo "install 'rails' using your package manager (apt install rails)"
-    exit 1
-fi
+function check_command() {
+    if ! command -v $1 > /dev/null
+    then
+        echo "$1 could not be found"
+        echo "install $1 using your package manager (apt install $1)"
+        exit 1
+    fi
+}
+
+check_command rails
+check_command multitail
 
 NEED_BUILD="N"
+MULTITAIL="N"
 
 function interactive() {
     read -p "Target service dir: " TARGET_PROJ
@@ -15,6 +21,7 @@ function interactive() {
     read -p "Active sring profile (can be empty): " SPRING_PROFILE
     read -p "Env file (can be empty): " ENV_FILE
     read -p "Need build ? (n/y) (n default, can be empty): " NEED_BUILD
+    read -p "Watch log? (n/y) (n default, can be empty): " MULTITAIL
 }
 
 while [[ "$#" -gt 0 ]]; do
@@ -25,6 +32,7 @@ while [[ "$#" -gt 0 ]]; do
         -e|--env-file) ENV_FILE=$2; shift ;;
         -e|--debug_port) DEBUG_PORT=$2; shift ;;
         -b|--build) NEED_BUILD="Y" ;;
+        -m|--watch-log) MULTITAIL=$2; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -42,8 +50,8 @@ if [[ "$NEED_BUILD" == "Y" || "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]];
     fi
 fi
 
-JVM_OPTS="-Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom"
-JAR_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=0.0.0.0:$DEBUG_PORT --spring.profiles.active=$SPRING_PROFILE"
+JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom"
+JAR_OPTS="--spring.profiles.active=$SPRING_PROFILE"
 echo "Running with java arguments: $JAR_OPTS"
 
 BUILD_DIR="$TARGET_PROJ/target"
@@ -82,3 +90,8 @@ echo $! > "$SERVICE_DIR/$PID_FILE"
 
 echo "Log file created at: $LOG_FILE"
 echo "Pid file created at: $PID_FILE"
+echo "Debug port opened: $DEBUG_PORT"
+
+if [[ "$MULTITAIL" == "Y" || "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
+	multitail $LOG_FILE
+fi

@@ -17,9 +17,16 @@ echo $DB_USER
 
 . ./deploy-db.sh
 
+if [[ -z "$1" ]]; then
+  WATCH_LOG="N"
+else
+  WATCH_LOG=$1
+fi
+
 ./run.sh --spring-profile "dev" \
         --service-dir "$HOME/gh/ocrv/ext/auth" \
         --env-file $ENV \
         --debug_port "5000" \
+	--watch-log "$WATCH_LOG" \
         --build
 
