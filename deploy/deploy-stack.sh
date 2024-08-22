@@ -1,5 +1,6 @@
 #!/bin/sh
 
-./auth.sh
-./bff.sh
+./auth.sh N
+./bff.sh N
+./pn.sh N
 
