@@ -97,5 +97,5 @@ echo "Pid file created at: $PID_FILE"
 echo "Debug port opened: $DEBUG_PORT"
 
 if [[ "$MULTITAIL" == "Y" || "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
-	multitail $LOG_FILE
+	multitail -cT ansi -i $LOG_FILE
 fi
