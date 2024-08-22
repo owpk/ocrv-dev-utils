@@ -13,7 +13,7 @@ check_command rails
 check_command multitail
 
 NEED_BUILD="N"
-MULTITAIL="N"
+MULTITAIL="Y"
 
 function interactive() {
     read -p "Target service dir: " TARGET_PROJ

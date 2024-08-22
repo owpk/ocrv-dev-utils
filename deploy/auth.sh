@@ -18,7 +18,7 @@ echo $DB_USER
 . ./deploy-db.sh
 
 if [[ -z "$1" ]]; then
-  WATCH_LOG="N"
+  WATCH_LOG="Y"
 else
   WATCH_LOG=$1
 fi
