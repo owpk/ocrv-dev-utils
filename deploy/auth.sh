@@ -1,6 +1,4 @@
 PROJ="auth"
-PID="$(cat "$HOME/ocrv/run/$PROJ/$PROJ.pid" 2> /dev/null)"
-kill $PID 2> /dev/null
 
 ENV="$HOME/gh/ocrv/dev-utils/env/$PROJ.env"
 
@@ -24,10 +22,10 @@ else
   WATCH_LOG=$1
 fi
 
-./run.sh --spring-profile "dev" \
+. ./run.sh --spring-profile "dev" \
         --service-dir "$HOME/gh/ocrv/ext/auth" \
         --env-file $ENV \
         --debug_port "5000" \
-	--watch-log "$WATCH_LOG" \
+	    --watch-log "$WATCH_LOG" \
         --build
 

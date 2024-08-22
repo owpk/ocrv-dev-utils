@@ -82,6 +82,10 @@ if ! [ -z "$ENV_FILE" ]; then
 fi
 
 RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
+
+echo "Killng last proccess of project: $PROJ"
+kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 
+
 echo "Running jar file: $RUN_JAR"
 nohup java $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE &
 
