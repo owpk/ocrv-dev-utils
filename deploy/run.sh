@@ -9,7 +9,6 @@ function check_command() {
     fi
 }
 
-check_command rails
 check_command multitail
 
 NEED_BUILD="N"
@@ -44,7 +43,12 @@ if [[ "$NEED_BUILD" == "Y" || "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]];
     echo "Running maven build"
     cd $TARGET_PROJ
     if ! command -v mvn > /dev/null; then
-        ./mvnw clean package
+         if ! [[ -x "./mvnw" ]]
+         then
+             echo "Local 'mvnw' is not executable. Changing permissions"
+             chmod +x ./mvnw
+         fi
+         ./mvnw clean package
     else 
         mvn clean package 
     fi
