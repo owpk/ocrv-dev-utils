@@ -2,7 +2,7 @@ PROJ="pn"
 PID="$(cat "$HOME/ocrv/run/$PROJ/$PROJ.pid" 2> /dev/null)"
 kill $PID 2> /dev/null
 
-ENV="$HOME/gh/ocrv/dev-utils/env/$PROJ.env"
+ENV="$HOME/ocrv/dev-utils/env/$PROJ.env"
 
 export $(grep -v '^#' $ENV | xargs)
 

@@ -17,16 +17,14 @@ install() {
    TARGET_DIR="$2"
    
    mkdir -p $TARGET_DIR
-   cd $TARGET_DIR
    
    echo "project list: $PR"
 
    for i in ${projects[@]}; do
       target="$HOST/$i.git"
       echo "installing project $target"
-      git clone $target 
+      git clone $target $TARGET_DIR/
    done
-   cd $CUR
 }
 
 # czt

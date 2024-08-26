@@ -1,6 +1,6 @@
 PROJ="auth"
 
-ENV="$HOME/gh/ocrv/dev-utils/env/$PROJ.env"
+ENV="$HOME/ocrv/dev-utils/env/$PROJ.env"
 
 export $(grep -v '^#' $ENV | xargs)
 
