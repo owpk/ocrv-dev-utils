@@ -12,7 +12,7 @@ else
 fi
 
 . ./run.sh --spring-profile "dev" \
-        --service-dir "$HOME/gh/ocrv/czt/bff" \
+        --service-dir "$HOME/ocrv/czt/bff" \
         --env-file $ENV \
         --debug_port "5001" \
         --watch-log "$WATCH_LOG" \

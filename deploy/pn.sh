@@ -25,9 +25,9 @@ else
 fi
 
 ./run.sh --spring-profile "dev" \
-        --service-dir "$HOME/gh/ocrv/czt/pn-backend" \
+        --service-dir "$HOME/ocrv/czt/pn-backend" \
         --env-file $ENV \
         --debug_port "5003" \
-	--watch-log "$WATCH_LOG" \
+	     --watch-log "$WATCH_LOG" \
         --build
 

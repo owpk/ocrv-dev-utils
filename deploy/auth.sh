@@ -23,7 +23,7 @@ else
 fi
 
 . ./run.sh --spring-profile "dev" \
-        --service-dir "$HOME/gh/ocrv/ext/auth" \
+        --service-dir "$HOME/ocrv/ext/auth" \
         --env-file $ENV \
         --debug_port "5000" \
 	    --watch-log "$WATCH_LOG" \
