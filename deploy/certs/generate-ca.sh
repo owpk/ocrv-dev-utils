@@ -49,7 +49,6 @@ openssl rsa -in server.key -out server.nopass.key
 # fastcgi_param SSL_CLIENT_CERT $ssl_client_cert;
 # fastcgi_param SSL_DN $ssl_client_s_dn;
 # 
-# 
 # теперь сервер готов принимать запросы на https.
 # в переменных к бекенду появились переменные с информацией о сертификате, в первую очередь SSL_VERIFIED (принимает значение SUCCESS).
 # 
