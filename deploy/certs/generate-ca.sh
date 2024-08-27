@@ -5,7 +5,7 @@
 # Собственный доверенный сертификат (Certificate Authority или CA) необходим для подписи клиентских сертификатов и для их проверки при авторизации клиента веб-сервером.
 # С помощью приведенной ниже команды создается закрытый ключ и самоподписанный сертификат.
 
-openssl req -new -newkey rsa:1024 -nodes -keyout ca.key -x509 \
+openssl req -new -newkey rsa:2048 -nodes -keyout ca.key -x509 \
    -days 500 -subj /C=RU/ST=Moscow/L=Moscow/O=Companyname/OU=User/CN=etc/emailAddress=support@site.com \
    -out ca.crt
 
@@ -92,7 +92,7 @@ organizationalUnitName = optional
 commonName = optional
 emailAddress = optional
 EOF
-# 
+
 # Далее надо подготовить структуру каталогов и файлов, соответствующую описанной в конфигурационном файле
 
 mkdir db
@@ -107,7 +107,7 @@ echo "01" > db/serial
 # Для создания подписанного клиентского сертификата предварительно необходимо создать запрос на сертификат, для его последующей подписи. 
 # Аргументы команды полностью аналогичны аргументам использовавшимся при создании самоподписанного доверенного сертификата, но отсутствует параметр -x509.
 
-openssl req -new -newkey rsa:1024 \
+openssl req -new -newkey rsa:2048 \
    -nodes -keyout client01.key \
    -subj /C=RU/ST=Moscow/L=Moscow/O=Companyname/OU=User/CN=etc/emailAddress=support@site.com \
    -out client01.csr
