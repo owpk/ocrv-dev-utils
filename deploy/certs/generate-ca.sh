@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir ca_out
+cd ca_out
+
 # Шаг 1. Создание собственного самоподписанного доверенного сертификата.
 # 
 # Собственный доверенный сертификат (Certificate Authority или CA) необходим для подписи клиентских сертификатов и для их проверки при авторизации клиента веб-сервером.
@@ -24,7 +27,7 @@ openssl req -new -newkey rsa:2048 -nodes -keyout ca.key -x509 \
 # Шаг 2. Сертификат сервера
 # 
 # Создадим сертификат для nginx и запрос для него
-openssl genrsa -des3 -out server.key 1024
+openssl genrsa -des3 -out server.key 2048
 openssl req -new -key server.key -out server.csr
 
 # Подпишем сертификат нашей же собственной подписью
