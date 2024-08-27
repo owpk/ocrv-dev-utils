@@ -1,7 +1,7 @@
 PROJ="bff"
 
 # !! auth env is correct since bff connects to auth db 
-ENV=($HOME/ocrv/dev-utils/env/auth.env $HOME/ocrv/dev-utils/env/bff.env)
+ENV=("./env/auth.env" "./env/bff.env")
 
 export $(grep -rhv '^#' $ENV | xargs)
 
