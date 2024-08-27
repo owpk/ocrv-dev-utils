@@ -1,0 +1,49 @@
+Certificate:
+    Data:
+        Version: 1 (0x0)
+        Serial Number: 1 (0x1)
+        Signature Algorithm: md5WithRSAEncryption
+        Issuer: C=RU, ST=Moscow, L=Moscow, O=Companyname, OU=User, CN=etc/emailAddress=support@site.com
+        Validity
+            Not Before: Aug 27 03:48:32 2024 GMT
+            Not After : Aug 27 03:48:32 2025 GMT
+        Subject: C=RU, ST=Moscow, L=Moscow, O=Companyname, OU=User, CN=etc/emailAddress=support@site.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (1024 bit)
+                Modulus:
+                    00:bd:af:0e:e0:ae:db:8a:ed:df:8f:5b:de:6b:88:
+                    33:06:38:a7:38:35:c5:82:00:a9:eb:d0:04:de:5d:
+                    c5:81:b0:78:16:41:bb:2e:9d:b5:f2:7d:1a:77:96:
+                    29:0f:9b:a2:4d:a8:16:b2:18:f5:2a:75:fe:80:1f:
+                    b7:34:07:c9:48:01:e7:e6:d9:ba:af:e2:5e:bc:96:
+                    1e:4f:06:e6:e0:d0:5c:26:58:50:ae:b0:eb:26:cb:
+                    74:ec:66:56:64:ff:fe:cb:e5:22:4d:09:eb:9b:33:
+                    b6:45:f4:cb:0c:04:76:a2:f2:79:1f:ac:e3:4e:32:
+                    32:82:8a:c3:ab:cd:71:3a:c1
+                Exponent: 65537 (0x10001)
+    Signature Algorithm: md5WithRSAEncryption
+         46:29:03:2b:88:32:97:50:a3:28:61:b3:15:94:81:17:08:e3:
+         cf:bc:78:35:a1:d7:fd:02:b8:d5:6f:18:14:57:bd:e1:f7:d5:
+         5b:52:02:6e:73:e0:6b:c6:05:7a:69:4d:2b:1d:4a:c8:6f:c2:
+         9e:90:da:6b:9e:0d:35:08:e3:3d:2b:ce:50:4a:8a:94:2a:9c:
+         3c:09:13:13:dd:65:02:0b:a3:90:c2:5b:ef:bb:10:74:54:ce:
+         20:99:e6:47:44:60:de:9c:ae:af:ee:15:fd:40:fb:57:19:d3:
+         4f:f0:ff:e3:1b:b3:22:d9:20:c9:ad:80:58:ba:3b:95:e7:9b:
+         19:24
+-----BEGIN CERTIFICATE-----
+MIICdzCCAeACAQEwDQYJKoZIhvcNAQEEBQAwgYMxCzAJBgNVBAYTAlJVMQ8wDQYD
+VQQIDAZNb3Njb3cxDzANBgNVBAcMBk1vc2NvdzEUMBIGA1UECgwLQ29tcGFueW5h
+bWUxDTALBgNVBAsMBFVzZXIxDDAKBgNVBAMMA2V0YzEfMB0GCSqGSIb3DQEJARYQ
+c3VwcG9ydEBzaXRlLmNvbTAeFw0yNDA4MjcwMzQ4MzJaFw0yNTA4MjcwMzQ4MzJa
+MIGDMQswCQYDVQQGEwJSVTEPMA0GA1UECAwGTW9zY293MQ8wDQYDVQQHDAZNb3Nj
+b3cxFDASBgNVBAoMC0NvbXBhbnluYW1lMQ0wCwYDVQQLDARVc2VyMQwwCgYDVQQD
+DANldGMxHzAdBgkqhkiG9w0BCQEWEHN1cHBvcnRAc2l0ZS5jb20wgZ8wDQYJKoZI
+hvcNAQEBBQADgY0AMIGJAoGBAL2vDuCu24rt349b3muIMwY4pzg1xYIAqevQBN5d
+xYGweBZBuy6dtfJ9GneWKQ+bok2oFrIY9Sp1/oAftzQHyUgB5+bZuq/iXryWHk8G
+5uDQXCZYUK6w6ybLdOxmVmT//svlIk0J65sztkX0ywwEdqLyeR+s404yMoKKw6vN
+cTrBAgMBAAEwDQYJKoZIhvcNAQEEBQADgYEARikDK4gyl1CjKGGzFZSBFwjjz7x4
+NaHX/QK41W8YFFe94ffVW1ICbnPga8YFemlNKx1KyG/CnpDaa54NNQjjPSvOUEqK
+lCqcPAkTE91lAgujkMJb77sQdFTOIJnmR0Rg3pyur+4V/UD7VxnTT/D/4xuzItkg
+ya2AWLo7leebGSQ=
+-----END CERTIFICATE-----
