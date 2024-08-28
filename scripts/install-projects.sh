@@ -9,6 +9,7 @@ projects=(
    "deploy" 
    "auth" 
    "bff" 
+   "gateway"
    "pn-backend" 
    "pn-front" 
    "fs-front" 
