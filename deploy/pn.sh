@@ -16,16 +16,11 @@ echo $DB_USER
 
 . ./deploy-db.sh
 
-if [[ -z "$1" ]]; then
-  WATCH_LOG="Y"
-else
-  WATCH_LOG=$1
-fi
-
-./run.sh --spring-profile "dev" \
+. ./run.sh --spring-profile "dev" \
         --service-dir "$HOME/ocrv/czt/pn-backend" \
         --env-file $ENV \
         --debug_port "5003" \
-	     --watch-log "$WATCH_LOG" \
+	     --watch-log "n" \
+        --detach "n" \
         --build "y"
 

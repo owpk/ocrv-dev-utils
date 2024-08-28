@@ -3,7 +3,7 @@
 SAP_LIB="$HOME/.m2/repository/com"
 rm -rf "$SAP_LIB/sap" 2> /dev/null
 mkdir -p $SAP_LIB 2> /dev/null
-cp -r ./libs/com/sap $SAP_LIB/
+cp -r ../libs/com/sap $SAP_LIB/
 
 projects=(
    "deploy" 

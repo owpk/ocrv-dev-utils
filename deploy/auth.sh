@@ -1,6 +1,7 @@
 PROJ="auth"
 
 ENV="$(pwd)/env/$PROJ.env"
+echo $ENV
 
 export $(grep -v '^#' $ENV | xargs)
 
@@ -14,18 +15,13 @@ echo $DB_PORT
 echo $DB_PASS
 echo $DB_USER
 
-. ./deploy-db.sh
+. $(pwd)/deploy-db.sh
 
-if [[ -z "$1" ]]; then
-  WATCH_LOG="Y"
-else
-  WATCH_LOG=$1
-fi
-
-. ./run.sh --spring-profile "local" \
+. $(pwd)/run.sh --spring-profile "dev" \
         --service-dir "$HOME/ocrv/czt/auth" \
         --env-file $ENV \
         --debug_port "5000" \
-	     --watch-log $WATCH_LOG\
+	     --watch-log "n" \
+        --detach "n" \
         --build "y"
 

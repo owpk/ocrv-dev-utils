@@ -8,10 +8,10 @@ function check_command() {
     fi
 }
 
-check_command multitail
 
 NEED_BUILD="n"
 MULTITAIL="y"
+DETACH="y"
 
 tolower() {
    echo $1 | awk '{print tolower($0)}'
@@ -25,9 +25,7 @@ function interactive() {
     read -p "Env file (can be empty): " ENV_FILE
     read -p "Need build ? (n/y) (n): " NEED_BUILD
     read -p "Watch log? (n/y) (n): " MULTITAIL
-
-    NEED_BUILD=$(tolower $NEED_BUILD)
-    MULTITAIL=$(tolower $MULTITAIL)
+    read -p "Detach process? (n/y) (n): " DETACH
 }
 
 while [[ "$#" -gt 0 ]]; do
@@ -38,12 +36,17 @@ while [[ "$#" -gt 0 ]]; do
         -j|--build-dir) BUILD_DIR=$2; shift ;;
         -e|--env-file) ENV_FILE=$2; shift ;;
         -c|--debug_port) DEBUG_PORT=$2; shift ;;
-        -b|--build) NEED_BUILD=$2; shift;;
-        -m|--watch-log) MULTITAIL=$2; shift;;
+        -b|--build) NEED_BUILD="$2"; shift;;
+        -m|--watch-log) MULTITAIL="$2"; shift;;
+        -x|--detach) DETACH="$2"; shift;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
 done
+
+NEED_BUILD=$(tolower $NEED_BUILD)
+MULTITAIL=$(tolower $MULTITAIL)
+DETACH=$(tolower $DETACH)
 
 if [ -z $BUILD_DIR ]; then
    BUILD_DIR="$TARGET_PROJ/target"
@@ -96,8 +99,16 @@ RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
 echo "Killng last proccess of project: $PROJ"
 kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
 
+run_jar() {
+   java $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE
+}
+
 echo "Running jar file: $RUN_JAR"
-nohup java $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE &
+if [ "$DETACH" == "y" ]; then
+   nohup run_jar &
+else
+   run_jar
+fi
 
 PID_FILE="$JAR_NAME.pid"
 echo $! > "$SERVICE_DIR/$PID_FILE"
@@ -105,10 +116,14 @@ echo $! > "$SERVICE_DIR/$PID_FILE"
 echo "Running with java arguments: $JAR_OPTS"
 echo "Loaded project: $JAR_NAME"
 echo "Need build: $NEED_BUILD"
+echo "Watch log: $MULTITAIL"
 echo "Enviroment file: $ENV_FILE"
 echo "Debug port opened: $DEBUG_PORT"
 echo "Log file created at: $LOG_FILE"
 
-if [[ "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
-	multitail -cT ansi -i $LOG_FILE
+if [ "$DETACH" == "n" ]; then
+   if [[ "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
+      check_command multitail
+   	multitail -cT ansi -i $LOG_FILE
+   fi
 fi
