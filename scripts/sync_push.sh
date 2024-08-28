@@ -1,8 +1,9 @@
 #!/bin/bash
 
 HOME_BRANCH=$1
-REMOTE_WORK=origin
-REMOTE_HOME=gh
+
+REMOTE_WORK=$2 # e.g origin
+REMOTE_HOME=$3 # e.g gh
 
 git fetch --all
 git checkout master
