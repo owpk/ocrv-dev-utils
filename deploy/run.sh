@@ -3,42 +3,53 @@
 function check_command() {
     if ! command -v $1 > /dev/null
     then
-        echo "$1 could not be found"
+        echo "WARN: $1 could not be found"
         echo "install $1 using your package manager (apt install $1)"
-        exit 1
     fi
 }
 
 check_command multitail
 
-NEED_BUILD="N"
-MULTITAIL="Y"
+NEED_BUILD="n"
+MULTITAIL="y"
+
+tolower() {
+   echo $1 | awk '{print tolower($0)}'
+}
 
 function interactive() {
     read -p "Target service dir: " TARGET_PROJ
+    read -p "Target build dir (should be empty if service dir provided): " BUILD_DIR
     read -p "Debug port (e.g. 5005): " DEBUG_PORT 
     read -p "Active sring profile (can be empty): " SPRING_PROFILE
     read -p "Env file (can be empty): " ENV_FILE
-    read -p "Need build ? (n/y) (n default, can be empty): " NEED_BUILD
-    read -p "Watch log? (n/y) (n default, can be empty): " MULTITAIL
+    read -p "Need build ? (n/y) (n): " NEED_BUILD
+    read -p "Watch log? (n/y) (n): " MULTITAIL
+
+    NEED_BUILD=$(tolower $NEED_BUILD)
+    MULTITAIL=$(tolower $MULTITAIL)
 }
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -i|--interactive) interactive; break;;
+        -i|--interactive) interactive; break ;;
         -p|--spring-profile) SPRING_PROFILE=$2; shift ;;
         -d|--service-dir) TARGET_PROJ=$2; shift ;;
+        -j|--build-dir) BUILD_DIR=$2; shift ;;
         -e|--env-file) ENV_FILE=$2; shift ;;
-        -e|--debug_port) DEBUG_PORT=$2; shift ;;
-        -b|--build) NEED_BUILD="Y" ;;
-        -m|--watch-log) MULTITAIL=$2; shift ;;
+        -c|--debug_port) DEBUG_PORT=$2; shift ;;
+        -b|--build) NEED_BUILD="y"; ;;
+        -m|--watch-log) MULTITAIL="y"; ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
 done
 
+if [ -z $BUILD_DIR ]; then
+   BUILD_DIR="$TARGET_PROJ/target"
+fi
 
-if [[ "$NEED_BUILD" == "Y" || "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
+if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
     echo "Running maven build"
     cd $TARGET_PROJ
     if ! command -v mvn > /dev/null; then
@@ -56,7 +67,6 @@ fi
 JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom"
 JAR_OPTS="--spring.profiles.active=$SPRING_PROFILE"
 
-BUILD_DIR="$TARGET_PROJ/target"
 TARGET_JAR="$BUILD_DIR/*.jar"
 
 ROOT_DIR="$HOME/ocrv/run"
@@ -99,6 +109,6 @@ echo "Enviroment file: $ENV_FILE"
 echo "Debug port opened: $DEBUG_PORT"
 echo "Log file created at: $LOG_FILE"
 
-if [[ "$MULTITAIL" == "Y" || "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
+if [[ "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
 	multitail -cT ansi -i $LOG_FILE
 fi
