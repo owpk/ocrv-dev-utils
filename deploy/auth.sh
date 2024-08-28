@@ -26,6 +26,6 @@ fi
         --service-dir "$HOME/ocrv/czt/auth" \
         --env-file $ENV \
         --debug_port "5000" \
-	    --watch-log "$WATCH_LOG" \
-        --build
+	     --watch-log $WATCH_LOG\
+        --build "y"
 

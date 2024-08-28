@@ -1,7 +1,6 @@
 PROJ="bff"
 
-# !! auth env is correct since bff connects to auth db 
-ENV=("$(pwd)/env/auth.env" "$(pwd)/env/bff.env")
+ENV="$(pwd)/env/gateway.env"
 
 export $(grep -rhv '^#' $ENV | xargs)
 
@@ -12,8 +11,8 @@ else
 fi
 
 . ./run.sh --spring-profile "dev" \
-        --service-dir "$HOME/ocrv/czt/bff" \
+        --service-dir "$HOME/ocrv/czt/gateway" \
         --env-file $ENV \
         --debug_port "5001" \
         --watch-log "$WATCH_LOG" \
-        --build "y"
+        --build

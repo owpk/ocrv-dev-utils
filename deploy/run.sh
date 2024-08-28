@@ -38,8 +38,8 @@ while [[ "$#" -gt 0 ]]; do
         -j|--build-dir) BUILD_DIR=$2; shift ;;
         -e|--env-file) ENV_FILE=$2; shift ;;
         -c|--debug_port) DEBUG_PORT=$2; shift ;;
-        -b|--build) NEED_BUILD="y"; ;;
-        -m|--watch-log) MULTITAIL="y"; ;;
+        -b|--build) NEED_BUILD=$2; shift;;
+        -m|--watch-log) MULTITAIL=$2; shift;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -94,7 +94,7 @@ fi
 RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
 
 echo "Killng last proccess of project: $PROJ"
-kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 
+kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
 
 echo "Running jar file: $RUN_JAR"
 nohup java $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE &

@@ -27,5 +27,5 @@ fi
         --env-file $ENV \
         --debug_port "5003" \
 	     --watch-log "$WATCH_LOG" \
-        --build
+        --build "y"
 
