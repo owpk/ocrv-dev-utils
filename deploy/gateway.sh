@@ -10,9 +10,17 @@ else
   WATCH_LOG=$1
 fi
 
+DB_NAME=$CZT_GW_DB_NAME
+DB_PORT=$CZT_GW_DB_PORT
+DB_USER=$CZT_GW_DB_USERNAME
+DB_PASS=$CZT_GW_DB_PASS
+
+. ./deploy-db.sh
+
 . ./run.sh --spring-profile "dev" \
         --service-dir "$HOME/ocrv/czt/gateway" \
         --env-file $ENV \
-        --debug_port "5001" \
-        --watch-log "$WATCH_LOG" \
-        --build
+        --debug_port "5004" \
+        --watch-log "n" \
+        --detach "n" \
+        --build "y"

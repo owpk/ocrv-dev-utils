@@ -10,11 +10,6 @@ DB_PORT=$CZT_AUTH_DB_PORT
 DB_USER=$CZT_AUTH_DB_USERNAME
 DB_PASS=$CZT_AUTH_DB_PASS
 
-echo $DB_NAME
-echo $DB_PORT
-echo $DB_PASS
-echo $DB_USER
-
 . $(pwd)/deploy-db.sh
 
 . $(pwd)/run.sh --spring-profile "dev" \
