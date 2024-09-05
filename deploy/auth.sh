@@ -12,7 +12,7 @@ DB_PASS=$CZT_AUTH_DB_PASS
 
 . $(pwd)/deploy-db.sh
 
-. $(pwd)/run.sh --spring-profile "dev" \
+. $(pwd)/run.sh --spring-profile "dev,mock-users,metrics" \
         --service-dir "$HOME/ocrv/czt/auth" \
         --env-file $ENV \
         --debug_port "5000" \

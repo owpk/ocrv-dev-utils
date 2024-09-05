@@ -1,5 +1,9 @@
 #!/bin/sh
 
+export JAVA_HOME=/home/user/.sdkman/candidates/java/current
+
+JAVA_EXE=$JAVA_HOME/bin/java
+
 function check_command() {
     if ! command -v $1 > /dev/null
     then
@@ -53,7 +57,6 @@ if [ -z $BUILD_DIR ]; then
 fi
 
 if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
-    echo "Running maven build"
     cd $TARGET_PROJ
     if ! command -v mvn > /dev/null; then
          if ! [[ -x "./mvnw" ]]
@@ -61,10 +64,13 @@ if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
              echo "Local 'mvnw' is not executable. Changing permissions"
              chmod +x ./mvnw
          fi
+         MAVEN_EXE="$(pwd)/mvnw (wrapper)"
          ./mvnw clean package
     else 
+        MAVEN_EXE="$(which mvn)"
         mvn clean package 
     fi
+    echo "Running maven build with maven: $MAVEN_EXE"
 fi
 
 JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom"
@@ -100,7 +106,7 @@ echo "Killng last proccess of project: $PROJ"
 kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
 
 run_jar() {
-   java $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE
+   $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE
 }
 
 echo "Running jar file: $RUN_JAR"

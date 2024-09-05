@@ -9,9 +9,9 @@ DB_PORT=$CZT_PN_DB_PORT
 DB_USER=$CZT_PN_DB_USERNAME
 DB_PASS=$CZT_PN_DB_PASS
 
-. ./deploy-db.sh
+. $(pwd)/deploy-db.sh
 
-. ./run.sh --spring-profile "dev" \
+. $(pwd)/run.sh --spring-profile "dev,metrics" \
         --service-dir "$HOME/ocrv/czt/pn-backend" \
         --env-file $ENV \
         --debug_port "5003" \
