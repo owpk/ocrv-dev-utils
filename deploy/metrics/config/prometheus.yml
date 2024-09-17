@@ -1,11 +1,24 @@
 scrape_configs:
-  - job_name: "sample_monitoring-auth"
+  - job_name: "monitoring-auth"
     scrape_interval: 5s
     metrics_path: "/actuator/prometheus"
     static_configs:
       - targets: ["host.docker.internal:9000"]
-  - job_name: "sample_monitoring-pn"
+        labels:
+          name: "auth"
+
+  - job_name: "monitoring-pn"
     scrape_interval: 5s
     metrics_path: "/pn/actuator/prometheus"
     static_configs:
       - targets: ["host.docker.internal:8081"]
+        labels:
+          name: "pn"
+
+  - job_name: "monitoring-gateway"
+    scrape_interval: 5s
+    metrics_path: "/gateway/actuator/prometheus"
+    static_configs:
+      - targets: ["host.docker.internal:8082"]
+        labels:
+          name: "gateway"

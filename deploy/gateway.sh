@@ -17,7 +17,7 @@ DB_PASS=$CZT_GW_DB_PASS
 
 . ./deploy-db.sh
 
-. ./run.sh --spring-profile "dev,mock-sap" \
+. ./run.sh --spring-profile "dev,metrics,mock-sap" \
         --service-dir "$HOME/ocrv/czt/gateway" \
         --env-file $ENV \
         --debug_port "5005" \
