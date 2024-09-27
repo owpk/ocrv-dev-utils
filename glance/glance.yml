@@ -1,0 +1,108 @@
+server:
+  port: 8080
+  base-url: /
+  assets-path: /app/assets
+
+branding:
+  hide-footer: true
+  custom-footer: |
+    <p>OCRV</p>
+  logo-url: /assets/ocrv.png
+  favicon-url: /assets/figure.png
+  
+theme:
+  background-color: 225 14 15
+  primary-color: 157 47 65
+  contrast-multiplier: 1.1
+  
+#theme:
+#  background-color: 229 19 23
+#  contrast-multiplier: 1.2
+#  primary-color: 222 74 74
+#  positive-color: 96 44 68
+#  negative-color: 359 68 71
+
+pages:
+  - name: irk czt.dev
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 24h
+            timezones:
+              - timezone: Asia/Irkutsk
+                label: IRK
+              - timezone: Europe/Moscow
+                label: MSK
+
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: Auth
+                url: https://auth.irk.czt.ocrv.com.rzd/swagger-ui/index.html
+                icon: si:swagger
+
+              - title: PN
+                url: https://resources.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
+                icon: si:swagger
+
+              - title: FS
+                url: https://resources.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
+                icon: si:swagger
+
+              - title: Gateway
+                url: https://resources.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
+                icon: si:swagger
+
+      - size: full
+        widgets:
+          - type: bookmarks
+            style: horizontal-cards-2
+            groups:
+              - title: Swagger
+                color: 200 50 50
+                links:
+                  - title: Auth
+                    url: https://auth.irk.czt.ocrv.com.rzd/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: PN
+                    url: https://resources.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: FS
+                    url: https://resources.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: Gateway
+                    url: https://resources.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
+                    icon: si:swagger
+
+              - title: Dev Utils
+                color: 10 70 50
+                links:
+                  - title: DBeaver | cbadmin:RES517fghj
+                    url: https://db.irk.czt.ocrv.com.rzd
+                    icon: si:dbeaver
+
+                  - title: Metrics | owpk:1422
+                    url: https://metrics.db.irk.czt.ocrv.com.rzd
+                    icon: si:grafana
+
+                  - title: Portainer | owpk:1422
+                    url: https://portainer.db.irk.czt.ocrv.com.rzd
+                    icon: si:portainer
+
+              - links:
+                  - title: OCRV mine
+                    icon: si:ruby
+                    url: https://main.ocrv.ru
+
+          - type: releases
+            show-source-icon: true
+            repositories:
+              - gitlab:fdroid/fdroidclient
+              - gitlab:fdroid/fdroidclient
+              - gitlab:fdroid/fdroidclient
+              - gitlab:fdroid/fdroidclient

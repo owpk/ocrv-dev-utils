@@ -1,4 +1,4 @@
-NAMES=("auth" "bff" "gateway" "pn" "fs")
+NAMES=("auth" "gateway" "pn-backend" "fs-backend")
 
 RED='\033[0;31m'
 GR='\033[0;32m'
@@ -9,7 +9,7 @@ NC='\033[0m' # No Color
 color=$YL
 
 for i in ${NAMES[@]}; do
-   status=$(systemctl is-active czt-$i)
+   status=$(systemctl is-active $i)
    if [ "$status" == "active" ]; then
       color=$GR
    elif [ "$status" == "inactive" ]; then

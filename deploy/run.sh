@@ -1,7 +1,6 @@
 #!/bin/sh
 
 export JAVA_HOME=/home/user/.sdkman/candidates/java/current
-
 JAVA_EXE=$JAVA_HOME/bin/java
 
 function check_command() {
@@ -11,7 +10,6 @@ function check_command() {
         echo "install $1 using your package manager (apt install $1)"
     fi
 }
-
 
 NEED_BUILD="n"
 MULTITAIL="y"
@@ -23,7 +21,7 @@ tolower() {
 
 function interactive() {
     read -p "Target service dir: " TARGET_PROJ
-    read -p "Target build dir (should be empty if service dir provided): " BUILD_DIR
+    read -p "Target jar (should be empty if service dir provided): " TARGET_JAR
     read -p "Debug port (e.g. 5005): " DEBUG_PORT 
     read -p "Active sring profile (can be empty): " SPRING_PROFILE
     read -p "Env file (can be empty): " ENV_FILE
@@ -37,7 +35,7 @@ while [[ "$#" -gt 0 ]]; do
         -i|--interactive) interactive; break ;;
         -p|--spring-profile) SPRING_PROFILE=$2; shift ;;
         -d|--service-dir) TARGET_PROJ=$2; shift ;;
-        -j|--build-dir) BUILD_DIR=$2; shift ;;
+        -j|--target-jar) TARGET_JAR=$2; shift ;;
         -e|--env-file) ENV_FILE=$2; shift ;;
         -c|--debug_port) DEBUG_PORT=$2; shift ;;
         -b|--build) NEED_BUILD="$2"; shift;;
@@ -52,37 +50,47 @@ NEED_BUILD=$(tolower $NEED_BUILD)
 MULTITAIL=$(tolower $MULTITAIL)
 DETACH=$(tolower $DETACH)
 
-if [ -z $BUILD_DIR ]; then
-   BUILD_DIR="$TARGET_PROJ/target"
-fi
+function build() {
+   # change dir to target project root
+   cd $1
+   if ! command -v mvn > /dev/null; then
+        if ! [[ -x "./mvnw" ]]
+        then
+            echo "Local 'mvnw' is not executable. Changing permissions"
+            chmod +x ./mvnw
+        fi
+        MAVEN_EXE="$(pwd)/mvnw (wrapper)"
+        ./mvnw clean package
+   else 
+       MAVEN_EXE="$(which mvn)"
+       mvn clean package 
+   fi
+   echo "Running maven build with maven: $MAVEN_EXE"
+}
 
-if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
-    cd $TARGET_PROJ
-    if ! command -v mvn > /dev/null; then
-         if ! [[ -x "./mvnw" ]]
-         then
-             echo "Local 'mvnw' is not executable. Changing permissions"
-             chmod +x ./mvnw
-         fi
-         MAVEN_EXE="$(pwd)/mvnw (wrapper)"
-         ./mvnw clean package
-    else 
-        MAVEN_EXE="$(which mvn)"
-        mvn clean package 
-    fi
-    echo "Running maven build with maven: $MAVEN_EXE"
-fi
+function prepare_jar() {
+   if [ -z $TARGET_PROJ ]; then
+      FULL_JAR_NAME="${TARGET_JAR##*/}"
+      RUN_JAR=$TARGET_JAR
+   else
+      TARGET_JAR="$BUILD_DIR/*.jar"
+      FULL_JAR_NAME="$(ls $BUILD_DIR | grep -m1 .jar)"
+      RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
+
+      if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
+         build $TARGET_PROJ
+      fi
+   fi
+}
+
+prepare_jar
 
 JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom"
 JAR_OPTS="--spring.profiles.active=$SPRING_PROFILE"
 
-TARGET_JAR="$BUILD_DIR/*.jar"
-
 ROOT_DIR="$HOME/ocrv/run"
 
-FULL_JAR_NAME="$(ls $BUILD_DIR | grep -m1 .jar)"
 JAR_NAME="$(echo $FULL_JAR_NAME | cut -d'-' -f1)"
-
 SERVICE_DIR="$ROOT_DIR/$JAR_NAME"
 mkdir -p $SERVICE_DIR 2>/dev/null
 
@@ -97,10 +105,10 @@ LOG_FILE="$LOG_DIR/$JAR_NAME.log"
 
 if ! [ -z "$ENV_FILE" ]; then 
     echo "Exporting enviroments from: $ENV_FILE"
-    export $(grep -v '^#' $ENV_FILE | xargs)
+    export $(grep -rhv '^#' $ENV_FILE | xargs)
+    echo "Enviroment variables exported:"
+    echo "$(grep -rhv '^#' $ENV_FILE)"
 fi
-
-RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
 
 echo "Killng last proccess of project: $PROJ"
 kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
@@ -110,15 +118,6 @@ run_jar() {
 }
 
 echo "Running jar file: $RUN_JAR"
-if [ "$DETACH" == "y" ]; then
-   nohup run_jar &
-else
-   run_jar
-fi
-
-PID_FILE="$JAR_NAME.pid"
-echo $! > "$SERVICE_DIR/$PID_FILE"
-
 echo "Running with java arguments: $JAR_OPTS"
 echo "Loaded project: $JAR_NAME"
 echo "Need build: $NEED_BUILD"
@@ -127,9 +126,15 @@ echo "Enviroment file: $ENV_FILE"
 echo "Debug port opened: $DEBUG_PORT"
 echo "Log file created at: $LOG_FILE"
 
-if [ "$DETACH" == "n" ]; then
+if [ "$DETACH" == "y" ]; then
+   PID_FILE="$SERVICE_DIR/$JAR_NAME.pid"
+   nohup run_jar &
+   echo $! > "$PID_FILE"
+   echo "Pid file created: $PID_FILE"
    if [[ "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
       check_command multitail
    	multitail -cT ansi -i $LOG_FILE
    fi
+else
+   run_jar
 fi
