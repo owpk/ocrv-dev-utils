@@ -9,12 +9,12 @@ branding:
     <p>OCRV</p>
   logo-url: /assets/ocrv.png
   favicon-url: /assets/figure.png
-  
+
 theme:
   background-color: 225 14 15
   primary-color: 157 47 65
   contrast-multiplier: 1.1
-  
+
 #theme:
 #  background-color: 229 19 23
 #  contrast-multiplier: 1.2
@@ -40,19 +40,19 @@ pages:
             title: Services
             sites:
               - title: Auth
-                url: https://auth.irk.czt.ocrv.com.rzd/swagger-ui/index.html
+                url: http://auth.irk.czt.ocrv.com.rzd/actuator
                 icon: si:swagger
 
               - title: PN
-                url: https://resources.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
+                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
                 icon: si:swagger
 
               - title: FS
-                url: https://resources.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
+                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator
                 icon: si:swagger
 
               - title: Gateway
-                url: https://resources.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
+                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator
                 icon: si:swagger
 
       - size: full
@@ -68,15 +68,15 @@ pages:
                     icon: si:swagger
 
                   - title: PN
-                    url: https://resources.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
+                    url: https://resource.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
                     icon: si:swagger
 
                   - title: FS
-                    url: https://resources.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
+                    url: https://resource.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
                     icon: si:swagger
 
                   - title: Gateway
-                    url: https://resources.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
+                    url: https://resource.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
                     icon: si:swagger
 
               - title: Dev Utils
@@ -87,22 +87,14 @@ pages:
                     icon: si:dbeaver
 
                   - title: Metrics | owpk:1422
-                    url: https://metrics.db.irk.czt.ocrv.com.rzd
+                    url: https://metrics.irk.czt.ocrv.com.rzd
                     icon: si:grafana
 
                   - title: Portainer | owpk:1422
-                    url: https://portainer.db.irk.czt.ocrv.com.rzd
+                    url: https://portainer.irk.czt.ocrv.com.rzd
                     icon: si:portainer
 
               - links:
                   - title: OCRV mine
                     icon: si:ruby
                     url: https://main.ocrv.ru
-
-          - type: releases
-            show-source-icon: true
-            repositories:
-              - gitlab:fdroid/fdroidclient
-              - gitlab:fdroid/fdroidclient
-              - gitlab:fdroid/fdroidclient
-              - gitlab:fdroid/fdroidclient
