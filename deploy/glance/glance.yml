@@ -35,26 +35,6 @@ pages:
               - timezone: Europe/Moscow
                 label: MSK
 
-          - type: monitor
-            cache: 1m
-            title: Services
-            sites:
-              - title: Auth
-                url: http://auth.irk.czt.ocrv.com.rzd/actuator
-                icon: si:swagger
-
-              - title: PN
-                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
-                icon: si:swagger
-
-              - title: FS
-                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator
-                icon: si:swagger
-
-              - title: Gateway
-                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator
-                icon: si:swagger
-
       - size: full
         widgets:
           - type: bookmarks
@@ -98,3 +78,23 @@ pages:
                   - title: OCRV mine
                     icon: si:ruby
                     url: https://main.ocrv.ru
+
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: Auth | server:9000 debug:5000
+                url: http://auth.irk.czt.ocrv.com.rzd/actuator
+                icon: si:swagger
+
+              - title: PN | server:8080 debug:5003
+                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
+                icon: si:swagger
+
+              - title: FS | server:8091 debug:5004
+                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator
+                icon: si:swagger
+
+              - title: Gateway | server:8082 debug:5005
+                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator
+                icon: si:swagger
