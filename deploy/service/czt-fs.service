@@ -1,0 +1,10 @@
+[Unit]
+Description=System information service
+[Service]
+RestartSec=1
+User=user
+ExecStart=/bin/bash /home/user/ocrv/dev-utils/deploy/fs.sh
+WorkingDirectory=/home/user/ocrv/dev-utils/deploy/
+[Install]
+WantedBy=multi-user.target
+

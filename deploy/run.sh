@@ -73,13 +73,13 @@ function prepare_jar() {
       FULL_JAR_NAME="${TARGET_JAR##*/}"
       RUN_JAR=$TARGET_JAR
    else
-      TARGET_JAR="$BUILD_DIR/*.jar"
-      FULL_JAR_NAME="$(ls $BUILD_DIR | grep -m1 .jar)"
-      RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
-
       if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
          build $TARGET_PROJ
       fi
+
+      BUILD_DIR=$TARGET_PROJ/target
+      FULL_JAR_NAME="$(ls $BUILD_DIR | grep -m1 .jar)"
+      RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
    fi
 }
 

@@ -1,0 +1,134 @@
+services:
+  auth-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=authdb
+      - POSTGRES_USER=auth
+      - POSTGRES_PASSWORD=auth-secret
+    networks:
+      - czt-network
+  auth:
+    #image: ${REGISTRY}/czt-portal/auth:${AUTH_VERSION}
+    build:
+      context: ./auth/
+    depends_on:
+      - auth-db
+    environment:
+      - TZ=Europe/Moscow
+      - SPRING_PROFILES_ACTIVE=metrics
+    env_file:
+      - ./env/auth.env
+      - ./env/hosts.env
+      - ./env/oauth2.env
+    ports:
+      - 5000:5000 # debug port (Can be opened in test, should be closed on production!)
+      - 9000:8080
+    networks:
+      - czt-network
+
+  gw-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=gatewaydb
+      - POSTGRES_USER=gateway_service
+      - POSTGRES_PASSWORD=gateway-secret
+    networks:
+      - czt-network
+  gateway:
+    #image: ${REGISTRY}/czt-portal/gateway:${GATEWAY_VERSION}
+    build:
+      context: ./gateway/
+    depends_on:
+      - auth
+      - gw-db
+    env_file:
+      - ./env/gateway.env
+      - ./env/hosts.env
+      - ./env/oauth2.env
+    environment:
+      - TZ=Europe/Moscow
+    ports:
+      - 5005:5000 # debug port
+      - 8082:8080
+    networks:
+      - czt-network
+
+  pn-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=pndb
+      - POSTGRES_USER=pn_service
+      - POSTGRES_PASSWORD=pn-secret
+    networks:
+      - czt-network
+  pn-backend:
+    #image: ${REGISTRY}/czt-portal/pn-backend:${PNBACK_VERSION}
+    build:
+      context: ./pn-backend/
+    env_file:
+      - ./env/pn.env
+      - ./env/hosts.env
+      - ./env/oauth2.env
+    environment:
+      - TZ=Europe/Moscow
+    ports:
+      - 5003:5000 # debug port
+      - 8081:8080
+    networks:
+      - czt-network
+
+  fs-db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=fsdb
+      - POSTGRES_USER=fs_service
+      - POSTGRES_PASSWORD=fs-secret
+    networks:
+      - czt-network
+  fs-backend:
+    #image: ${REGISTRY}/czt-portal/fs-backend:${FSBACK_VERSION}
+    build:
+      context: ./fs-backend/
+    depends_on:
+      - fs-db
+    environment:
+      - TZ=Europe/Moscow
+    env_file:
+      - ./env/fs.env
+      - ./env/auth.env
+      - ./env/pn.env
+      - ./env/hosts.env
+      - ./env/oauth2.env
+    ports:
+      - 5004:5000 # debug port
+      - 8091:8080
+    networks:
+      - czt-network
+networks:
+  czt-network:
+
+  #fs-front:
+  #  image: ${REGISTRY}/czt-portal/fs-front:${FSFRONT_VERSION}
+  #  env_file:
+  #    - fs-front.env
+  #  environment:
+  #    - TZ=Europe/Moscow
+  #  networks:
+  #    - czt-network
+  #  ports:
+  #    - "3000:3000"
+  #  deploy:
+  #    mode: global
+
+  #pn-front:
+  #  image: ${REGISTRY}/czt-portal/pn-front:${PNFRONT_VERSION}
+  #  env_file:
+  #    - pn-front.env
+  #  environment:
+  #    - TZ=Europe/Moscow
+  #  networks:
+  #    - czt-network
+  #  ports:
+  #    - "3001:3000"
+  #  deploy:
+  #    mode: global
