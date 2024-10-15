@@ -16,7 +16,7 @@ DB_PASS=$CZT_PN_DB_PASS
 #        --service-dir "$HOME/ocrv/czt/pn-backend" \
 #        --env-file "$ENV" \
 #        --debug_port "5003" \
-#	      --watch-log "n" \
+#	      --watch-log "y" \
 #        --detach "n" \
 #        --build "y"
 

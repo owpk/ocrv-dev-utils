@@ -21,7 +21,7 @@ DB_PASS=$CZT_GW_DB_PASS
 #. ./run.sh --spring-profile "dev,metrics,mock-sap" \
 #        --service-dir "$HOME/ocrv/czt/gateway" \
 #        --env-file "$ENV" \
-#        --debug_port "5005" \
+#        --debug_port "5010" \
 #        --watch-log "n" \
 #        --detach "n" \
 #        --build "y"
@@ -29,6 +29,6 @@ DB_PASS=$CZT_GW_DB_PASS
 . ./run.sh --spring-profile "dev,metrics,mock-sap" \
         --target-jar "/opt/czt/gateway-0.0.1-SNAPSHOT.jar" \
         --env-file "$ENV" \
-        --debug_port "5005" \
+        --debug_port "5010" \
         --watch-log "n" \
         --detach "n"

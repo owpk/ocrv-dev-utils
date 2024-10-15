@@ -62,6 +62,10 @@ pages:
               - title: Dev Utils
                 color: 10 70 50
                 links:
+                  - title: Kafka
+                    url: https://kafka.irk.czt.ocrv.com.rzd
+                    icon: si:apachekafka
+
                   - title: DBeaver | cbadmin:RES517fghj
                     url: https://db.irk.czt.ocrv.com.rzd
                     icon: si:dbeaver
@@ -87,7 +91,7 @@ pages:
                 url: http://auth.irk.czt.ocrv.com.rzd/actuator
                 icon: si:swagger
 
-              - title: PN | server:8080 debug:5003
+              - title: PN | server:8090 debug:5003
                 url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
                 icon: si:swagger
 
