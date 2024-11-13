@@ -1,0 +1,9 @@
+#SAP System DHR300
+#Wed Nov 13 11:07:25 MSK 2024
+jco.client.lang=ru
+jco.client.pcs=1
+jco.client.passwd=hf,jnftv
+jco.client.sysnr=10
+jco.client.client=300
+jco.client.user=Z_TECH_FRD
+jco.client.ashost=10.248.14.61
