@@ -85,7 +85,7 @@ function prepare_jar() {
 
 prepare_jar
 
-JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom"
+JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom $JVM_OPTS_ADD"
 JAR_OPTS="--spring.profiles.active=$SPRING_PROFILE"
 
 ROOT_DIR="$HOME/ocrv/run"
@@ -117,6 +117,7 @@ run_jar() {
    $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE
 }
 
+echo "Running with JVM OPTS: $JVM_OPTS"
 echo "Running jar file: $RUN_JAR"
 echo "Running with java arguments: $JAR_OPTS"
 echo "Loaded project: $JAR_NAME"
