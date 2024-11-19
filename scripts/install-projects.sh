@@ -1,9 +1,14 @@
 #!/bin/bash
 
 SAP_LIB="$HOME/.m2/repository/com"
+SAP_NATIVE_LIB="/lib/libsapjco3.so"
+
 rm -rf "$SAP_LIB/sap" 2> /dev/null
+sudo rm -rf $SAP_NATIVE_LIB 2> /dev/null
+
 mkdir -p $SAP_LIB 2> /dev/null
 cp -r ../libs/com/sap $SAP_LIB/
+sudo cp ../libs/libsapjco3.so /lib
 
 projects=(
    "deploy" 

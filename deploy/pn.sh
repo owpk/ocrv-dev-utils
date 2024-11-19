@@ -12,17 +12,17 @@ DB_PASS=$CZT_PN_DB_PASS
 
 . $(pwd)/deploy-db.sh
 
-#. $(pwd)/run.sh --spring-profile "dev,metrics" \
-#        --service-dir "$HOME/ocrv/czt/pn-backend" \
-#        --env-file "$ENV" \
-#        --debug_port "5003" \
-#	      --watch-log "y" \
-#        --detach "n" \
-#        --build "y"
-
 . $(pwd)/run.sh --spring-profile "dev,metrics" \
-        --target-jar "/opt/czt/pn-backend-0.0.1-SNAPSHOT.jar" \
+        --service-dir "$HOME/ocrv/czt/pn-backend" \
         --env-file "$ENV" \
         --debug_port "5003" \
-	     --watch-log "n" \
-        --detach "n" 
+	      --watch-log "n" \
+        --detach "n" \
+        --build "y"
+
+#. $(pwd)/run.sh --spring-profile "dev,metrics" \
+#        --target-jar "/opt/czt/pn-backend-0.0.1-SNAPSHOT.jar" \
+#        --env-file "$ENV" \
+#        --debug_port "5003" \
+#	     --watch-log "n" \
+#        --detach "n" 

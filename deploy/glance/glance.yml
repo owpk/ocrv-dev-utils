@@ -23,7 +23,7 @@ theme:
 #  negative-color: 359 68 71
 
 pages:
-  - name: irk.czt
+  - name: czt resources
     columns:
       - size: small
         widgets:
@@ -34,77 +34,6 @@ pages:
                 label: IRK
               - timezone: Europe/Moscow
                 label: MSK
-
-      - size: full
-        widgets:
-          - type: bookmarks
-            style: horizontal-cards-2
-            groups:
-              - title: Swagger
-                color: 200 50 50
-                links:
-                  - title: Auth
-                    url: https://auth.irk.czt.ocrv.com.rzd/swagger-ui/index.html
-                    icon: si:swagger
-
-                  - title: PN
-                    url: https://resource.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
-                    icon: si:swagger
-
-                  - title: FS
-                    url: https://resource.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
-                    icon: si:swagger
-
-                  - title: Gateway
-                    url: https://resource.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
-                    icon: si:swagger
-
-              - title: Dev Utils
-                color: 10 70 50
-                links:
-                  - title: Kafka
-                    url: https://kafka.irk.czt.ocrv.com.rzd
-                    icon: si:apachekafka
-
-                  - title: DBeaver | cbadmin:RES517fghj
-                    url: https://db.irk.czt.ocrv.com.rzd
-                    icon: si:dbeaver
-
-                  - title: Metrics | owpk:1422
-                    url: https://metrics.irk.czt.ocrv.com.rzd
-                    icon: si:grafana
-
-                  - title: Portainer | owpk:1422
-                    url: https://portainer.irk.czt.ocrv.com.rzd
-                    icon: si:portainer
-
-              - links:
-                  - title: OCRV mine
-                    icon: si:ruby
-                    url: https://main.ocrv.ru
-
-          - type: monitor
-            cache: 1m
-            title: Services
-            sites:
-              - title: Auth | server:9000 debug:5000
-                url: http://auth.irk.czt.ocrv.com.rzd/actuator
-                icon: si:swagger
-
-              - title: PN | server:8090 debug:5003
-                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
-                icon: si:swagger
-
-              - title: FS | server:8091 debug:5004
-                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator
-                icon: si:swagger
-
-              - title: Gateway | server:8082 debug:5005
-                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator
-                icon: si:swagger
-
-  - name: czt resources
-    columns:
       - size: full
         widgets:
           - type: bookmarks
@@ -186,25 +115,138 @@ pages:
               - title: UTILS
                 color: 200 50 50
                 links:
+                  - title: DBeaver | cbadmin:RES517fghj
+                    url: https://db.irk.czt.ocrv.com.rzd
+                    icon: si:dbeaver
                   - title: GRAFANA (dev) | viewer 1qaz2wsx
                     url: https://grafana.czt.dev.ocrv.com.rzd/
                     icon: si:grafana
                   - title: PORTAINER | viewer 1qaz2wsx
                     url: http://portainer.czt.dev.ocrv.com.rzd/
                     icon: si:portainer
+  - name: irk.czt
+    columns:
+      - size: full
+        widgets:
+          - type: bookmarks
+            style: horizontal-cards-2
+            groups:
+              - title: Swagger
+                color: 200 50 50
+                links:
+                  - title: Auth
+                    url: https://auth.irk.czt.ocrv.com.rzd/swagger-ui/index.html
+                    icon: si:swagger
 
+                  - title: PN
+                    url: https://resource.irk.czt.ocrv.com.rzd/pn/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: FS
+                    url: https://resource.irk.czt.ocrv.com.rzd/fs/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: Gateway
+                    url: https://resource.irk.czt.ocrv.com.rzd/gateway/swagger-ui/index.html
+                    icon: si:swagger
+
+              - title: Dev Utils
+                color: 10 70 50
+                links:
+                  - title: Kafka
+                    url: https://kafka.irk.czt.ocrv.com.rzd
+                    icon: si:apachekafka
+
+                  - title: Metrics | owpk:1422
+                    url: https://metrics.irk.czt.ocrv.com.rzd
+                    icon: si:grafana
+
+                  - title: Portainer | owpk:1422
+                    url: https://portainer.irk.czt.ocrv.com.rzd
+                    icon: si:portainer
+
+              - links:
+                  - title: OCRV mine
+                    icon: si:ruby
+                    url: https://main.ocrv.ru
+
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: Auth | server:9000 debug:5000
+                url: http://auth.irk.czt.ocrv.com.rzd/actuator
+                icon: si:swagger
+
+              - title: PN | server:8090 debug:5003
+                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
+                icon: si:swagger
+
+              - title: FS | server:8091 debug:5004
+                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator
+                icon: si:swagger
+
+              - title: Gateway | server:8082 debug:5005
+                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator
+                icon: si:swagger
+
+  - name: czt.dev
+    columns:
+      - size: full
+        widgets:
+          - type: bookmarks
+            style: horizontal-cards-2
+            groups:
+              - title: Front End app
+                color: 200 50 50
+                links:
+                  - title: PN front
+                    url: https://pn.czt.dev.ocrv.com.rzd
+                    icon: si:react
+
+                  - title: FA front
+                    url: https://fs.czt.dev.ocrv.com.rzd
+                    icon: si:react
+              - title: Swagger
+                color: 200 50 50
+                links:
+                  - title: Auth
+                    url: https://auth.czt.dev.ocrv.com.rzd/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: PN
+                    url: https://resource.czt.dev.ocrv.com.rzd/pn/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: FS
+                    url: https://resource.czt.dev.ocrv.com.rzd/fs/swagger-ui/index.html
+                    icon: si:swagger
+
+                  - title: Gateway
+                    url: https://resource.czt.dev.ocrv.com.rzd/gateway/swagger-ui/index.html
+                    icon: si:swagger
+
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: Auth | server:9000 debug:5000
+                url: https://auth.czt.dev.ocrv.com.rzd/actuator
+                icon: si:swagger
+
+              - title: PN | server:8090 debug:5003
+                url: https://resource.czt.dev.ocrv.com.rzd/pn/actuator
+                icon: si:swagger
+
+              - title: FS | server:8091 debug:5004
+                url: https://resource.czt.dev.ocrv.com.rzd/fs/actuator
+                icon: si:swagger
+
+              - title: Gateway | server:8082 debug:5005
+                url: https://resource.czt.dev.ocrv.com.rzd/gateway/actuator
+                icon: si:swagger
   - name: czt.stable
     columns:
-      - size: small
-        widgets:
-          - type: clock
-            hour-format: 24h
-            timezones:
-              - timezone: Asia/Irkutsk
-                label: IRK
-              - timezone: Europe/Moscow
-                label: MSK
-
       - size: full
         widgets:
           - type: bookmarks
