@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SERVICE=$1
+
+ENV="$HOME/ocrv/dev-utils/deploy/env/$SERVICE.env"
+export $(grep -rhv '^#' $ENV | awk -v delim="DB" '{print substr($0, index($0, delim))}' | xargs)
+
+DB_HOST=${2:-$DB_HOST}
+rainfrog --url postgres://$DB_USERNAME:$DB_PASS@$DB_HOST:"$DB_PORT"/$DB_NAME

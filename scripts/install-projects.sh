@@ -10,6 +10,11 @@ mkdir -p $SAP_LIB 2> /dev/null
 cp -r ../libs/com/sap $SAP_LIB/
 sudo cp ../libs/libsapjco3.so /lib
 
+LOCAL_BIN=$HOME/.local/bin
+
+mkdir -p $LOCAL_BIN 2> /dev/null
+stow --adopt -vt $LOCAL_BIN ../deploy/utils
+
 projects=(
    "deploy" 
    "auth" 

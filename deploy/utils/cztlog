@@ -15,6 +15,6 @@ LOG=$HOME/ocrv/run/$PROJ/logs/$PROJ.log
 
 if [ $VIM -eq 1 ]; then
    nvim $LOG
-else 
+else
    multitail -n 3000 -cT ansi $LOG
 fi

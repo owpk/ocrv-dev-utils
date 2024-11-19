@@ -1,0 +1,5 @@
+#!/bin/bash
+
+CZT_SERVICE_NAMES=("auth" "gateway" "pn-backend" "fs-backend")
+export $CZT_SERVICE_NAMES
+echo "${CZT_SERVICE_NAMES[@]}"

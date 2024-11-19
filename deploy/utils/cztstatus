@@ -1,4 +1,6 @@
-NAMES=("auth" "gateway" "pn-backend" "fs-backend")
+#!/bin/bash
+NAMES=$(cztlist)
+NAMES_ARRAY=($NAMES)
 
 RED='\033[0;31m'
 GR='\033[0;32m'
@@ -7,13 +9,16 @@ YL='\033[0;33m'
 NC='\033[0m' # No Color
 
 color=$YL
+RESULT=""
 
-for i in ${NAMES[@]}; do
+for i in ${NAMES_ARRAY[@]}; do
    status=$(systemctl is-active $i)
    if [ "$status" == "active" ]; then
       color=$GR
    elif [ "$status" == "inactive" ]; then
       color=$RED
    fi
-   printf "${PR}$i${NC} service status ${color}$status${NC}\n"
+   RESULT="$RESULT ${PR}$i${NC} status ${color}$status${NC}\n"
 done
+
+printf "$RESULT" | column -t 
