@@ -39,6 +39,21 @@ pages:
           - type: bookmarks
             style: horizontal-cards-2
             groups:
+              - title: UTILS
+                color: 200 50 50
+                links:
+                  - title: Nexus
+                    url: http://nexus.ocrv.com.rzd
+                    icon: si:sonatype
+                  - title: DBeaver | cbadmin:RES517fghj
+                    url: https://db.irk.czt.ocrv.com.rzd
+                    icon: si:dbeaver
+                  - title: GRAFANA (dev) | viewer 1qaz2wsx
+                    url: https://grafana.czt.dev.ocrv.com.rzd/
+                    icon: si:grafana
+                  - title: PORTAINER | viewer 1qaz2wsx
+                    url: http://portainer.czt.dev.ocrv.com.rzd/
+                    icon: si:portainer
               - title: DEV OCRV
                 color: 100 50 50
                 links:
@@ -112,18 +127,6 @@ pages:
                     url: 172.22.194.150
                     icon: si:postgresql
 
-              - title: UTILS
-                color: 200 50 50
-                links:
-                  - title: DBeaver | cbadmin:RES517fghj
-                    url: https://db.irk.czt.ocrv.com.rzd
-                    icon: si:dbeaver
-                  - title: GRAFANA (dev) | viewer 1qaz2wsx
-                    url: https://grafana.czt.dev.ocrv.com.rzd/
-                    icon: si:grafana
-                  - title: PORTAINER | viewer 1qaz2wsx
-                    url: http://portainer.czt.dev.ocrv.com.rzd/
-                    icon: si:portainer
   - name: irk.czt
     columns:
       - size: full
