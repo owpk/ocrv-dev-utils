@@ -18,6 +18,7 @@ projects=(
    "pn-front" 
    "fs-front" 
    "fs-backend"
+   "springboot-kafka-mvc-starter"
 )
 
 CUR=$(pwd)
