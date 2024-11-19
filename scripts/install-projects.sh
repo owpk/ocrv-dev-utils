@@ -8,12 +8,12 @@ cp -r ../libs/com/sap $SAP_LIB/
 projects=(
    "deploy" 
    "auth" 
-   "bff" 
    "gateway"
    "pn-backend" 
    "pn-front" 
    "fs-front" 
    "fs-backend"
+   "springboot-kafka-mvc-starter"
 )
 
 CUR=$(pwd)
