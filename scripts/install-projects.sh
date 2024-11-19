@@ -13,7 +13,8 @@ sudo cp ../libs/libsapjco3.so /lib
 LOCAL_BIN=$HOME/.local/bin
 
 mkdir -p $LOCAL_BIN 2> /dev/null
-stow --adopt -vt $LOCAL_BIN ../deploy/utils
+
+(cd ../deploy; stow --adopt -vt $LOCAL_BIN utils)
 
 projects=(
    "deploy" 
