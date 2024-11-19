@@ -1,6 +1,6 @@
 PROJ="fs"
 
-LOCAL=$(./switchrun.sh)
+LOCAL=$(./switchrun.sh $@)
 
 ENV=(
    "$(pwd)/env/fs.env"

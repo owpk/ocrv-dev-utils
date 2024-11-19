@@ -1,8 +1,13 @@
 PROJ="pn"
 
-LOCAL=$(./switchrun.sh)
+LOCAL=$(./switchrun.sh $@)
 
-ENV=("$(pwd)/env/pn.env" "$(pwd)/env/hosts.env" "$(pwd)/env/oauth2.env")
+ENV=(
+   "$(pwd)/env/pn.env"
+   "$(pwd)/env/hosts.env"
+   "$(pwd)/env/oauth2.env"
+)
+
 ENV="${ENV[@]}"
 
 export $(grep -rhv '^#' $ENV | xargs)

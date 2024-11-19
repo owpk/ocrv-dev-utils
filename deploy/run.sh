@@ -113,9 +113,11 @@ fi
 echo "Killng last proccess of project: $PROJ"
 kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
 
-run_jar() {
+function run_jar() {
    $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE
 }
+
+export -f run_jar
 
 echo "Running with JVM OPTS: $JVM_OPTS"
 echo "Running jar file: $RUN_JAR"
@@ -129,7 +131,7 @@ echo "Log file created at: $LOG_FILE"
 
 if [ "$DETACH" == "y" ]; then
    PID_FILE="$SERVICE_DIR/$JAR_NAME.pid"
-   nohup run_jar &
+   nohup bash -c runJar &
    echo $! > "$PID_FILE"
    echo "Pid file created: $PID_FILE"
    if [[ "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then

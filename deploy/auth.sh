@@ -1,7 +1,17 @@
-PROJ="auth"
-LOCAL=$(./switchrun.sh)
+#!/bin/bash
 
-ENV=("$(pwd)/env/auth.env" "$(pwd)/env/hosts.env" "$(pwd)/env/integration.env" "$(pwd)/env/oauth2.env")
+PROJ="auth"
+
+LOCAL=$(./switchrun.sh $@)
+echo "LOCAL var: $LOCAL"
+
+ENV=(
+   "$(pwd)/env/auth.env"
+   "$(pwd)/env/hosts.env"
+   "$(pwd)/env/integration.env"
+   "$(pwd)/env/oauth2.env"
+)
+
 ENV="${ENV[@]}"
 
 export $(grep -rhv '^#' $ENV | xargs)
@@ -17,7 +27,7 @@ JVM_OPTS_ADD="-Dnative.lib.filename=libsapjco3 -Dsap.jcolib.target.path=lib -Den
 
 function localJar() {
    echo "Running local jar"
-   . $(pwd)/run.sh --spring-profile "dev,mock-users,metrics" \
+   . $(pwd)/run.sh --spring-profile "dev-oauth,dev,mock-users,metrics" \
            --service-dir "$HOME/ocrv/czt/auth" \
            --env-file "$ENV" \
            --debug_port "5000" \

@@ -1,8 +1,14 @@
 PROJ="bff"
 
-LOCAL=$(./switchrun.sh)
+LOCAL=$(./switchrun.sh $@)
 
-ENV=("$(pwd)/env/gateway.env" "$(pwd)/env/sap_integration.env" "$(pwd)/env/hosts.env" "$(pwd)/env/oauth2.env")
+ENV=(
+   "$(pwd)/env/gateway.env"
+   "$(pwd)/env/integration.env"
+   "$(pwd)/env/hosts.env"
+   "$(pwd)/env/oauth2.env"
+)
+
 ENV="${ENV[@]}"
 
 export $(grep -rhv '^#' $ENV | xargs)
