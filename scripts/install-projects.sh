@@ -68,3 +68,5 @@ projects=(
 )
 
 install $EXT_HOST $EXT
+
+./install-de.sh
