@@ -12,7 +12,7 @@ function check_command() {
 }
 
 NEED_BUILD="n"
-MULTITAIL="y"
+WATCH_LOG="y"
 DETACH="y"
 
 tolower() {
@@ -26,7 +26,7 @@ function interactive() {
     read -p "Active sring profile (can be empty): " SPRING_PROFILE
     read -p "Env file (can be empty): " ENV_FILE
     read -p "Need build ? (n/y) (n): " NEED_BUILD
-    read -p "Watch log? (n/y) (n): " MULTITAIL
+    read -p "Watch log? (n/y) (n): " WATCH_LOG
     read -p "Detach process? (n/y) (n): " DETACH
 }
 
@@ -39,7 +39,7 @@ while [[ "$#" -gt 0 ]]; do
         -e|--env-file) ENV_FILE=$2; shift ;;
         -c|--debug_port) DEBUG_PORT=$2; shift ;;
         -b|--build) NEED_BUILD="$2"; shift;;
-        -m|--watch-log) MULTITAIL="$2"; shift;;
+        -m|--watch-log) WATCH_LOG="$2"; shift;;
         -x|--detach) DETACH="$2"; shift;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
@@ -47,7 +47,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 NEED_BUILD=$(tolower $NEED_BUILD)
-MULTITAIL=$(tolower $MULTITAIL)
+WATCH_LOG=$(tolower $WATCH_LOG)
 DETACH=$(tolower $DETACH)
 
 function build() {
@@ -113,31 +113,43 @@ fi
 echo "Killng last proccess of project: $PROJ"
 kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
 
+function run_jar_async() {
+   echo "Running jar file in async mode"
+   $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE &
+}
+
 function run_jar() {
-   $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE
+   echo "Running jar in sync mode"
+   $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS
 }
 
 export -f run_jar
+export -f run_jar_async
 
 echo "Running with JVM OPTS: $JVM_OPTS"
 echo "Running jar file: $RUN_JAR"
 echo "Running with java arguments: $JAR_OPTS"
 echo "Loaded project: $JAR_NAME"
 echo "Need build: $NEED_BUILD"
-echo "Watch log: $MULTITAIL"
+echo "Watch log: $WATCH_LOG"
+echo "Detach: $DETACH"
 echo "Enviroment file: $ENV_FILE"
 echo "Debug port opened: $DEBUG_PORT"
-echo "Log file created at: $LOG_FILE"
 
 if [ "$DETACH" == "y" ]; then
+   echo "Log file created at: $LOG_FILE"
    PID_FILE="$SERVICE_DIR/$JAR_NAME.pid"
-   nohup bash -c runJar &
+   nohup bash -c run_jar_async
    echo $! > "$PID_FILE"
    echo "Pid file created: $PID_FILE"
-   if [[ "$MULTITAIL" == "y" || "$MULTITAIL" == "yes" ]]; then
+   if [[ "$WATCH_LOG" == "y" || "$WATCH_LOG" == "yes" ]]; then
       check_command multitail
    	multitail -cT ansi -i $LOG_FILE
    fi
 else
-   run_jar
+   if [[ "$WATCH_LOG" == "y" || "$WATCH_LOG" == "yes" ]]; then
+      run_jar
+   else 
+      run_jar_async
+   fi
 fi

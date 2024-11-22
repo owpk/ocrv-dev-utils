@@ -8,7 +8,8 @@ echo "Db port: $DB_PORT"
 echo "Db pass: $DB_PASS"
 echo "Db user: $DB_USER"
 
-docker stop $DB_NAME 2> /dev/null
+docker stop $CONTAINER 2> /dev/null
+docker container rm $CONTAINER
 
 docker run --name $DB_NAME \
     -p $DB_PORT:5432 \

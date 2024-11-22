@@ -31,9 +31,9 @@ function localJar() {
            --service-dir "$HOME/ocrv/czt/auth" \
            --env-file "$ENV" \
            --debug_port "5000" \
-   	     --watch-log "n" \
-           --detach "n" \
-           --build "y"
+   	     --watch-log "${WATCH_LOG:-'n'}" \
+           --detach "${DETACH-'n'}" \
+           --build "${BUILD-'y'}"
 }
 
 function defaultCi() {
