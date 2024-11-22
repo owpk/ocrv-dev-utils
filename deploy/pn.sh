@@ -35,9 +35,9 @@ function localJar() {
            --service-dir "$HOME/ocrv/czt/pn-backend" \
            --env-file "$ENV" \
            --debug_port "5003" \
-   	     --watch-log "${WATCH_LOG:-'n'}" \
-           --detach "${DETACH-'n'}" \
-           --build "${BUILD-'y'}"
+   	     --watch-log "${WATCH_LOG:-n}" \
+           --detach "${DETACH-n}" \
+           --build "${BUILD-y}"
 }
 
 if [ "$LOCAL" == "1" ]; then

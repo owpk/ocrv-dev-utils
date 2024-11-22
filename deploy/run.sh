@@ -69,11 +69,15 @@ function build() {
 }
 
 function prepare_jar() {
+   echo "Preparing jar"
    if [ -z $TARGET_PROJ ]; then
       FULL_JAR_NAME="${TARGET_JAR##*/}"
       RUN_JAR=$TARGET_JAR
    else
+      echo "Provided project: $TARGET_PROJ"
+      echo "Build needed: $NEED_BUILD"
       if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
+         echo "Building project: $TARGET_PROJ"
          build $TARGET_PROJ
       fi
 
@@ -81,6 +85,7 @@ function prepare_jar() {
       FULL_JAR_NAME="$(ls $BUILD_DIR | grep -m1 .jar)"
       RUN_JAR="$BUILD_DIR/$FULL_JAR_NAME"
    fi
+   echo "Detected jar $RUN_JAR"
 }
 
 prepare_jar
