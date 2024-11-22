@@ -79,6 +79,11 @@ function prepare_jar() {
       if [[ "$NEED_BUILD" == "y" || "$NEED_BUILD" == "yes" ]]; then
          echo "Building project: $TARGET_PROJ"
          build $TARGET_PROJ
+         build_status=$?
+         if [[ $build_status -ne 0 ]]; then
+            echo "Error while building project"
+            exit $build_status
+         fi
       fi
 
       BUILD_DIR=$TARGET_PROJ/target
