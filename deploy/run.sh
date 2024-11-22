@@ -131,12 +131,12 @@ echo "Running jar file: $RUN_JAR"
 echo "Running with java arguments: $JAR_OPTS"
 echo "Loaded project: $JAR_NAME"
 echo "Need build: $NEED_BUILD"
-echo "Watch log: $WATCH_LOG"
 echo "Detach: $DETACH"
 echo "Enviroment file: $ENV_FILE"
 echo "Debug port opened: $DEBUG_PORT"
 
 if [ "$DETACH" == "y" ]; then
+   echo "Watch log: $WATCH_LOG"
    echo "Log file created at: $LOG_FILE"
    PID_FILE="$SERVICE_DIR/$JAR_NAME.pid"
    nohup bash -c run_jar_async
