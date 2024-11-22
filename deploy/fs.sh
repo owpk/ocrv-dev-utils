@@ -27,9 +27,9 @@ function localJar() {
            --service-dir "$HOME/ocrv/czt/fs-backend" \
            --env-file "$ENV" \
            --debug_port "5004" \
-   	     --watch-log "n" \
-           --detach "n" \
-           --build "y"
+   	     --watch-log "${WATCH_LOG:-'n'}" \
+           --detach "${DETACH-'n'}" \
+           --build "${BUILD-'y'}"
 }
 
 function defaultCi() {

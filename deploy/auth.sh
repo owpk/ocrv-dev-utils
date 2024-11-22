@@ -43,7 +43,7 @@ function defaultCi() {
            --env-file "$ENV" \
            --debug_port "5000" \
    	     --watch-log "n" \
-           --detach "n" 
+           --detach "y" 
 }
 
 if [ "$LOCAL" == "1" ]; then

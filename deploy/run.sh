@@ -147,9 +147,5 @@ if [ "$DETACH" == "y" ]; then
    	multitail -cT ansi -i $LOG_FILE
    fi
 else
-   if [[ "$WATCH_LOG" == "y" || "$WATCH_LOG" == "yes" ]]; then
-      run_jar
-   else 
-      run_jar_async
-   fi
+   run_jar
 fi
