@@ -5,6 +5,7 @@ LOCAL=$(./switchrun.sh $@)
 ENV=(
    "$(pwd)/env/gateway.env"
    "$(pwd)/env/integration.env"
+   "$(pwd)/env/kafka.env"
    "$(pwd)/env/hosts.env"
    "$(pwd)/env/oauth2.env"
 )
