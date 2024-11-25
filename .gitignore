@@ -3,3 +3,4 @@ volumes/
 dump*
 dump/
 .DS_Store
+*.out

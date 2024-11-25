@@ -7,7 +7,6 @@ echo "LOCAL var: $LOCAL"
 
 ENV=(
    "$(pwd)/env/auth.env"
-   "$(pwd)/env/kafka.env"
    "$(pwd)/env/hosts.env"
    "$(pwd)/env/integration.env"
    "$(pwd)/env/oauth2.env"
