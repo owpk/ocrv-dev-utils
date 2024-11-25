@@ -1,32 +1,81 @@
+networks:
+  ocrv:
+    driver: bridge
+
+volumes:
+  zoo-data:
+  zoo-datalog:
+  kafka-data:
+
 services:
   console:
-    image: docker.redpanda.com/redpandadata/console:latest
+    image: docker.redpanda.com/redpandadata/console:v2.7.2
+    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
+    entrypoint: /bin/sh
+    networks:
+        - ocrv
     ports:
       - 8899:8080
     environment:
-      KAFKA_BROKERS: kafka:29092
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["kafka:19092"]
+          schemaRegistry:
+            enabled: true
+            urls: ["http://schema-registry:8081"]
     container_name: kafka-console
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    container_name: schema-registry
+    networks:
+        - ocrv
+    depends_on:
+      - kafka
+    ports:
+      - "8900:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:19092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
+  zoo:
+    image: zookeeper:latest
+    restart: always
+    hostname: zoo
+    networks:
+        - ocrv
+    container_name: zoo
     ports:
       - 2181:2181
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    container_name: sn-zookeeper
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zoo:2888:3888;2181
+    volumes:
+      - zoo-data:/data
+      - zoo-datalog:/datalog
 
   kafka:
     image: confluentinc/cp-kafka:latest
-    depends_on:
-      - zookeeper
+    hostname: kafka
+    container_name: kafka
+    networks:
+        - ocrv
     ports:
-      - 9092:9092
-    container_name: sn-kafka
+      - "9092:9092"
     environment:
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo:2181"
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://172.22.202.128:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    depends_on:
+      - zoo
+
