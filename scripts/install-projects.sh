@@ -69,4 +69,5 @@ projects=(
 
 install $EXT_HOST $EXT
 
+./install-nginx.sh
 ./install-de.sh
