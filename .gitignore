@@ -4,3 +4,4 @@ dump*
 dump/
 .DS_Store
 *.out
+*.trc
