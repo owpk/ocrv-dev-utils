@@ -1,6 +1,6 @@
 #!/bin/sh
-
-./auth.sh N
-./bff.sh N
-./pn.sh N
+export DETACH=y
+./auth.sh -l
+./gateway.sh -l
+./pn.sh -l
 
