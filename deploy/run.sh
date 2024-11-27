@@ -125,7 +125,7 @@ kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
 
 function run_jar_async() {
    echo "Running jar file in async mode"
-   $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE &
+   nohup $JAVA_EXE $JVM_OPTS -jar $RUN_JAR $JAR_OPTS &> $LOG_FILE &
 }
 
 function run_jar() {
@@ -149,7 +149,7 @@ if [ "$DETACH" == "y" ]; then
    echo "Watch log: $WATCH_LOG"
    echo "Log file created at: $LOG_FILE"
    PID_FILE="$SERVICE_DIR/$JAR_NAME.pid"
-   nohup bash -c run_jar_async
+   run_jar_async
    echo $! > "$PID_FILE"
    echo "Pid file created: $PID_FILE"
    if [[ "$WATCH_LOG" == "y" || "$WATCH_LOG" == "yes" ]]; then
