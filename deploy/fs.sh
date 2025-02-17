@@ -23,7 +23,7 @@ DB_PASS=$CZT_FS_DB_PASS
 
 function localJar() {
    echo "Running local jar"
-   . $(pwd)/run.sh --spring-profile "metrics" \
+   . $(pwd)/run.sh --spring-profile "dev,metrics" \
            --service-dir "$HOME/ocrv/czt/fs-backend" \
            --env-file "$ENV" \
            --debug_port "5004" \

@@ -121,7 +121,8 @@ if ! [ -z "$ENV_FILE" ]; then
 fi
 
 echo "Killng last proccess of project: $PROJ"
-kill -9 $(ps -axu | grep java | grep $PROJ | awk '{print $2}') 2> /dev/null
+
+kill -9 $(jps | grep $PROJ | awk '{print $1}') 2> /dev/null
 
 function run_jar_async() {
    echo "Running jar file in async mode"
