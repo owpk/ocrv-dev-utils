@@ -58,73 +58,73 @@ pages:
                 color: 100 50 50
                 links:
                   - title: cztp-dev-lb01
-                    url: 172.22.10.150
+                    url: http://172.22.10.150
                     icon: si:nginx
 
                   - title: cztp-dev-lb02
-                    url: 172.22.10.156
+                    url: http://172.22.10.156
                     icon: si:nginx
 
                   - title: cztp-dev-app01
-                    url: 172.22.10.253
+                    url: http://172.22.10.253
                     icon: si:spring
 
                   - title: cztp-dev-app02
-                    url: 172.22.10.254
+                    url: http://172.22.10.254
                     icon: si:spring
 
                   - title: cztp-dev-app03
-                    url: 172.22.10.133
+                    url: http://172.22.10.133
                     icon: si:spring
 
                   - title: cztp-dev-db01
-                    url: 172.22.10.101
+                    url: http://172.22.10.101
                     icon: si:postgresql
 
                   - title: cztp-dev-db02
-                    url: 172.22.10.110
+                    url: http://172.22.10.110
                     icon: si:postgresql
 
               - title: TEST OCRV
                 color: 100 50 50
                 links:
                   - title: cztp-dev-lb01
-                    url: 172.22.194.102
+                    url: http://172.22.194.102
                     icon: si:nginx
 
                   - title: cztp-test-app01
-                    url: 172.22.194.100
+                    url: http://172.22.194.100
                     icon: si:spring
 
                   - title: cztp-test-app02
-                    url: 172.22.194.131
+                    url: http://172.22.194.131
                     icon: si:spring
 
                   - title: cztp-test-app03
-                    url: 172.22.194.146
+                    url: http://172.22.194.146
                     icon: si:spring
 
                   - title: cztp-test-db01
-                    url: 172.22.194.103
+                    url: http://172.22.194.103
                     icon: si:postgresql
 
               - title: STABLE OCRV
                 color: 100 50 50
                 links:
                   - title: cztp-stable-lb01
-                    url: 172.22.194.178
+                    url: http://172.22.194.178
                     icon: si:nginx
                   - title: cztp-stable-app01
-                    url: 172.22.194.163
+                    url: http://172.22.194.163
                     icon: si:spring
                   - title: cztp-stable-app02
-                    url: 172.22.194.170
+                    url: http://172.22.194.170
                     icon: si:spring
                   - title: cztp-stable-app03
-                    url: 172.22.194.168
+                    url: http://172.22.194.168
                     icon: si:spring
                   - title: cztp-stable-db01
-                    url: 172.22.194.150
+                    url: http://172.22.194.150
                     icon: si:postgresql
 
   - name: irk.czt
@@ -138,7 +138,7 @@ pages:
                 color: 200 50 50
                 links:
                   - title: Auth
-                    url: https://auth.irk.czt.ocrv.com.rzd/swagger-ui/index.html
+                    url: https://resource.irk.czt.ocrv.com.rzd/auth/swagger-ui/index.html
                     icon: si:swagger
 
                   - title: PN
@@ -178,19 +178,19 @@ pages:
             title: Services
             sites:
               - title: Auth | server:9000 debug:5000
-                url: http://auth.irk.czt.ocrv.com.rzd/actuator
+                url: http://resource.irk.czt.ocrv.com.rzd/auth/actuator/info
                 icon: si:swagger
 
               - title: PN | server:8090 debug:5003
-                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator
+                url: http://resource.irk.czt.ocrv.com.rzd/pn/actuator/info
                 icon: si:swagger
 
               - title: FS | server:8091 debug:5004
-                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator
+                url: http://resource.irk.czt.ocrv.com.rzd/fs/actuator/info
                 icon: si:swagger
 
               - title: Gateway | server:8082 debug:5005
-                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator
+                url: http://resource.irk.czt.ocrv.com.rzd/gateway/actuator/info
                 icon: si:swagger
 
   - name: czt.dev
@@ -207,14 +207,22 @@ pages:
                     url: https://pn.czt.dev.ocrv.com.rzd
                     icon: si:react
 
-                  - title: FA front
+                  - title: FS front
                     url: https://fs.czt.dev.ocrv.com.rzd
                     icon: si:react
+
+              - title: Utils
+                color: 100 50 50
+                links:
+                  - title: Logs
+                    url: https://logs.czt.dev.ocrv.com.rzd
+                    icon: si:swagger
+
               - title: Swagger
                 color: 200 50 50
                 links:
                   - title: Auth
-                    url: https://auth.czt.dev.ocrv.com.rzd/swagger-ui/index.html
+                    url: https://resource.czt.dev.ocrv.com.rzd/auth/swagger-ui/index.html
                     icon: si:swagger
 
                   - title: PN
@@ -234,19 +242,19 @@ pages:
             title: Services
             sites:
               - title: Auth | server:9000 debug:5000
-                url: https://auth.czt.dev.ocrv.com.rzd/actuator
+                url: http://resource.czt.dev.ocrv.com.rzd/auth/actuator/info
                 icon: si:swagger
 
               - title: PN | server:8090 debug:5003
-                url: https://resource.czt.dev.ocrv.com.rzd/pn/actuator
+                url: http://resource.czt.dev.ocrv.com.rzd/pn/actuator/info
                 icon: si:swagger
 
               - title: FS | server:8091 debug:5004
-                url: https://resource.czt.dev.ocrv.com.rzd/fs/actuator
+                url: http://resource.czt.dev.ocrv.com.rzd/fs/actuator/info
                 icon: si:swagger
 
               - title: Gateway | server:8082 debug:5005
-                url: https://resource.czt.dev.ocrv.com.rzd/gateway/actuator
+                url: http://resource.czt.dev.ocrv.com.rzd/gateway/actuator/info
                 icon: si:swagger
   - name: czt.stable
     columns:
@@ -262,14 +270,20 @@ pages:
                     url: https://pn.czt.stable.ocrv.com.rzd
                     icon: si:react
 
-                  - title: FA front
+                  - title: FS front
                     url: https://fs.czt.stable.ocrv.com.rzd
                     icon: si:react
+              - title: Utils
+                color: 100 50 50
+                links:
+                  - title: Logs
+                    url: https://logs.czt.stable.ocrv.com.rzd
+                    icon: si:swagger
               - title: Swagger
                 color: 200 50 50
                 links:
                   - title: Auth
-                    url: https://auth.czt.stable.ocrv.com.rzd/swagger-ui/index.html
+                    url: https://resource.czt.stable.ocrv.com.rzd/auth/swagger-ui/index.html
                     icon: si:swagger
 
                   - title: PN
@@ -289,17 +303,17 @@ pages:
             title: Services
             sites:
               - title: Auth | server:9000 debug:5000
-                url: https://auth.czt.stable.ocrv.com.rzd/actuator
+                url: http://resource.czt.stable.ocrv.com.rzd/auth/actuator/info
                 icon: si:swagger
 
               - title: PN | server:8090 debug:5003
-                url: https://resource.czt.stable.ocrv.com.rzd/pn/actuator
+                url: http://resource.czt.stable.ocrv.com.rzd/pn/actuator/info
                 icon: si:swagger
 
               - title: FS | server:8091 debug:5004
-                url: https://resource.czt.stable.ocrv.com.rzd/fs/actuator
+                url: http://resource.czt.stable.ocrv.com.rzd/fs/actuator/info
                 icon: si:swagger
 
               - title: Gateway | server:8082 debug:5005
-                url: https://resource.czt.stable.ocrv.com.rzd/gateway/actuator
+                url: http://resource.czt.stable.ocrv.com.rzd/gateway/actuator/info
                 icon: si:swagger
