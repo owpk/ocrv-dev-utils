@@ -95,7 +95,8 @@ function prepare_jar() {
 
 prepare_jar
 
-JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto -agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom $JVM_OPTS_ADD"
+#JVM_DEBUG="-agentlib:jdwp=transport=dt_socket,address=*:$DEBUG_PORT,server=y,suspend=n"
+JVM_OPTS="-Dserver.tomcat.protocol-header=x-forwarded-proto $JVM_DEBUG -Duser.timezone=Europe/Moscow -Dfile.encoding=UTF8 -Dorg.freemarker.loggerLibrary=SLF4J -Djava.security.egd=file:/dev/./urandom $JVM_OPTS_ADD"
 JAR_OPTS="--spring.profiles.active=$SPRING_PROFILE"
 
 ROOT_DIR="$HOME/ocrv/run"
